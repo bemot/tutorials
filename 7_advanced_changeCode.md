@@ -1,17 +1,17 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-25 April, 2019
+07 September, 2019
 
--   [Learning objectives](#learning-objectives)
--   [Getting started](#getting-started)
+-   [1 Learning objectives](#learning-objectives)
+-   [2 Getting started](#getting-started)
     -   [Step 1](#step-1)
     -   [Step 2](#step-2)
     -   [Step 3](#step-3)
     -   [Step 4](#step-4)
 
-Learning objectives
-===================
+1 Learning objectives
+=====================
 
 MAgPIE has a modular concept. Each module (e.g. cropland) can have several realization (e.g. dynamic and static). This tutorial shows how to add a new realization to a module in 4 steps:
 
@@ -20,8 +20,8 @@ MAgPIE has a modular concept. Each module (e.g. cropland) can have several reali
 3.  do simple modification in new realization
 4.  choose realization in cfg and run model
 
-Getting started
-===============
+2 Getting started
+=================
 
 We want to add a new realization to the cropland module. In the MAgPIE 4.0 release the cropland module (30\_crop) has only one realization called "endo\_jun13". In this realization irrigation of bioenergy crops is prohibited. We will add a new realization, based on "endo\_jun13", which allows for irrigation of bioenergy crops. We will call the new new realization "bioen\_irrig".
 

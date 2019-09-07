@@ -1,22 +1,22 @@
 Start running MAgPIE with default settings
 ================
 Kristine Karstens (<karstens@pik-potsdam.de>)
-25 April, 2019
+07 September, 2019
 
--   [1. Introduction](#introduction)
+-   [1 Introduction](#introduction)
     -   [Learning objectives](#learning-objectives)
--   [2. Start Scripts](#start-scripts)
+-   [2 Start Scripts](#start-scripts)
     -   [More details:](#more-details)
--   [3. Phases of model execution](#phases-of-model-execution)
+-   [3 Phases of model execution](#phases-of-model-execution)
     -   [Preprocessing](#preprocessing)
     -   [GAMS model execution](#gams-model-execution)
     -   [Postprosessing](#postprosessing)
--   [4. First ideas of troubleshooting](#first-ideas-of-troubleshooting)
--   [5. Stop the model](#stop-the-model)
--   [7. Lessons learned](#lessons-learned)
+-   [4 First ideas of troubleshooting](#first-ideas-of-troubleshooting)
+-   [5 Stop the model](#stop-the-model)
+-   [6 Lessons learned](#lessons-learned)
 
-1. Introduction
-===============
+1 Introduction
+==============
 
 Whereas MAgPIE inner core is written in GAMS, it comes with an outer layer for data handling in R. This also applies to the start of MAgPIE. Moreover this nested structure leads to some characteristics in code execution, that should been understand to do basic troubleshooting.
 
@@ -29,8 +29,8 @@ The goal of this exercise is to run MAgPIE with default settings. After completi
 3.  Find basic indicators in the case of errors.
 4.  Stop MAgPIE code.
 
-2. Start Scripts
-================
+2 Start Scripts
+===============
 
 To run the model execute within in terminal (cmd for Windows, shell for Linux, MacOS) in the main folder of the model:
 
@@ -104,13 +104,12 @@ To run a the code within your terminal you choose **`Direct execution`** (again 
 -   **`Debug mode`** is similar to normal **`Direct execution`**.
 -   If you run the code on a high performance cluster handling jobs with `SLURM`, you maybe also get a 4. and 5. option for job execution. **\``SLURM [priority/standby]`** will handle job submission to hpc. This is customize to PIK-cluster settings and may lead to problems on other hpc.
 
-3. Phases of model execution
-============================
+3 Phases of model execution
+===========================
 
 As pointed out before the execution of the GAMS model execution is nested in pre- and postprosessing framework written R.
 
-Preprocessing
--------------
+### Preprocessing
 
 Preprocessing starts with the execution of `Rscript start.R` and includes the following steps:
 
@@ -175,8 +174,7 @@ Several of these steps will generate terminal output.
 
 > **Exercise**: Match the terminal output to steps of preprocessing.
 
-GAMS model execution
---------------------
+### GAMS model execution
 
 The GAMS code execution is started with submit.R and by default there is no output on your terminal with regard to the optimizations prozess. You can find output in the output folder of the run:
 
@@ -220,8 +218,7 @@ The GAMS code execution is started with submit.R and by default there is no outp
 
 > **Exercise**: Open the `full.lst` and locate the different steps of gams model run.
 
-Postprosessing
---------------
+### Postprosessing
 
 Postprocessing starts after gams runs finished. If a `fulldata.gdx` was created, the following postprocessing steps are executed:
 
@@ -274,8 +271,8 @@ Postprocessing starts after gams runs finished. If a `fulldata.gdx` was created,
 
 Several of these steps will generate terminal output. More information in tutorial `5_AnalysingModelOutputs.Rmd`.
 
-4. First ideas of troubleshooting
-=================================
+4 First ideas of troubleshooting
+================================
 
 Here we listed some troubles and where to find them:
 
@@ -393,8 +390,8 @@ Here we listed some troubles and where to find them:
 
 > **Exercise**: If your run fails, try to find out with the help of terminal output and `full.lst`, `full.log`, what went wrong.
 
-5. Stop the model
-=================
+5 Stop the model
+================
 
 -   The model can be stopped with `Crtl` + `C`.
 -   If you run it in `background mode` you have to kill the job over the Task Manager or process handler (linux: `top`).
@@ -402,8 +399,8 @@ Here we listed some troubles and where to find them:
 
 > **Exercise**: Stop the magpie run with `Crtl` + `C`.
 
-7. Lessons learned
-==================
+6 Lessons learned
+=================
 
 1.  You started a MAgPIE run with the predefined **`default` start scripts**.
 2.  You had a look into on the **terminal output** and the **full.lst**.

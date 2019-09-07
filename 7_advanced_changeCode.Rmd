@@ -8,7 +8,7 @@ output:
     toc: yes
 ---
 
-# Learning objectives
+# 1 Learning objectives
 
 MAgPIE has a modular concept. Each module (e.g. cropland) can have several realization (e.g. dynamic and static).
 This tutorial shows how to add a new realization to a module in 4 steps:
@@ -19,7 +19,7 @@ This tutorial shows how to add a new realization to a module in 4 steps:
 4. choose realization in cfg and run model
 
 
-# Getting started
+# 2 Getting started
 
 We want to add a new realization to the cropland module.
 In the MAgPIE 4.0 release the cropland module (30_crop) has only one realization called "endo_jun13". In this realization irrigation of bioenergy crops is prohibited. We will add a new realization, based on "endo_jun13", which allows for irrigation of bioenergy crops. We will call the new new realization "bioen_irrig".
