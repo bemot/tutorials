@@ -6,12 +6,13 @@ Kristine Karstens (<karstens@pik-potsdam.de>)
 -   [1 Introduction](#introduction)
     -   [Learning objectives](#learning-objectives)
 -   [2 GitHub workflow for magpiemodel](#github-workflow-for-magpiemodel)
--   [3 Start to code yourself](#start-to-code-yourself)
+-   [3 Zoo of branches](#zoo-of-branches)
+-   [4 Start to commit yourself](#start-to-commit-yourself)
 
 1 Introduction
 ==============
 
-MAgPIE is published as open source software on GitHub. Hence we invite all interested people to understand but also develop the code. Since their are various workflows, how to use GitHub for collaborative software development, we want to give some general remarks on our prefered one. Note the following:
+MAgPIE is published as open source software on GitHub. Hence we invite all interested people to understand but also develop the code. Since there are various workflows, how to use GitHub for collaborative software development, we want to give some general remarks on our prefered one. Note the following:
 
 -   **Git** is a free and open source distributed version control system designed to handle everything from small to very large projects with speed and efficiency (from: <https://git-scm.com/> - very good help, documentation, tutorial page for git).
 
@@ -19,10 +20,10 @@ MAgPIE is published as open source software on GitHub. Hence we invite all inter
 
 ### Learning objectives
 
-The goal of this exercise is to set up MAgPIE for collabrative working. After completion of this exercise, you'll be able to:
+The goal of this exercise is to set up MAgPIE for collaborative working. After completion of this exercise, you'll be able to:
 
 1.  Fork and update MAgPIE from/with upstream repository.
-2.  Understand the basic workflow including pull requests.
+2.  Understand the basic workflow including pull requests and branches.
 3.  Have heard some very basic git commands and know where to find more help.
 
 2 GitHub workflow for magpiemodel
@@ -34,20 +35,32 @@ Every code development (even bugfixes) will be merged into our main repository u
 
 > **Exercise**: Visit us on <https://github.com/magpiemodel/magpie> and create your own fork by clicking at 'fork' (at the upper right).
 
-It is basically possible to change the code just using the GitHub interface, but since you want to test and run your code locally you have to clone the repository from your fork anyway. This can be done using the 'https' or 'ssh' adresse of your fork together with the `git clone` command (cmd/bash/GUI) at your machine. We recommand to upload a ssh-key and use ssh to connect to GitHub.
+It is basically possible to change the code just using the GitHub interface, but since you want to test and run your code locally you have to clone the repository from your fork anyway. This can be done using the 'https' or 'ssh' adresse of your fork together with the `git clone` command (cmd/bash/GUI) at your machine. We recommand to upload an ssh-key and use ssh to connect to GitHub.
 
 > **Exercise**: Visit your fork and clone the repository at your machine.
 
-To keep your fork up-to-date with the upstream repository you can use the GitHub interface. Via `Compare` you are able to look, if the upstream is some commits ahead and if so merge this new changes into your fork. If you feel familiar with git, you also can do this merging procedure by adding both your fork and the upstream repository as so called 'remotes' to your local repository.
+To keep your fork up-to-date with the upstream repository you can use the GitHub interface. Via `Compare` you are able to check, if the upstream is some commits ahead and if so merge this new changes into your fork. If you feel familiar with git, you also can do this merging procedure by adding both your fork and the upstream repository as so called 'remotes' to your local repository.
 
 > **Exercise**: Check, if there is anything to merge from the upstream repository into your fork. If so, merge it into your fork.
 
-3 Start to code yourself
-========================
+3 Zoo of branches
+=================
+
+To start new developments we create feature branches to keep the develop branch clean. In the following figure you can see a simple example for branches and their relationships.
+
+<img src="figures/git_branches.png" width="100%" style="display: block; margin: auto;" />
+
+-   The master branch of the upstream repository will be created by the magpiemodel team after accumulation of new developments in the develop branch. Please do not try to create a pull request directly to the master branch with you are not 100% sure, that you have a urgent hotfix.
+-   The develop branch is the basis for new developments. Create a feature branch at your project fork to start your feature.
+-   After you have finished your development by creating some commits, you merge your work via a pull request back to the develop branch of the upstream repository. You can merge your changes before into your develop and start a pull request from their or your directly create it from your feature branch.
+-   The work itself will be done at your local project clone and will be pushed into your project fork. Basic commands for the interaction between your magpie fork and the local working copy can be found in the next section.
+
+4 Start to commit yourself
+==========================
 
 When you start making your first changes to the code at your local copy, we strongly recommend to do a tutorial to get familiar with the basic commands in git. You can also have a look on 'git cheat sheets' like <https://about.gitlab.com/images/press/git-cheat-sheet.pdf>.
 
-Here we just want to draw your attention to the various working areas of the git workflow.
+Here we just want to draw your attention to: - the branching workfow, we are kindly ask you to use and - the various working areas of the git workflow.
 
 <img src="figures/git_basics.png" width="100%" style="display: block; margin: auto;" />
 
