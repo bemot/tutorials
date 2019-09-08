@@ -1,7 +1,7 @@
 Start running MAgPIE with default settings
 ================
 Kristine Karstens (<karstens@pik-potsdam.de>)
-07 September, 2019
+08 September, 2019
 
 -   [1 Introduction](#introduction)
     -   [Learning objectives](#learning-objectives)
@@ -11,7 +11,7 @@ Kristine Karstens (<karstens@pik-potsdam.de>)
     -   [Preprocessing](#preprocessing)
     -   [GAMS model execution](#gams-model-execution)
     -   [Postprosessing](#postprosessing)
--   [4 First ideas of troubleshooting](#first-ideas-of-troubleshooting)
+-   [4 First ideas for troubleshooting](#first-ideas-for-troubleshooting)
 -   [5 Stop the model](#stop-the-model)
 -   [6 Lessons learned](#lessons-learned)
 
@@ -271,8 +271,8 @@ Postprocessing starts after gams runs finished. If a `fulldata.gdx` was created,
 
 Several of these steps will generate terminal output. More information in tutorial `5_AnalysingModelOutputs.Rmd`.
 
-4 First ideas of troubleshooting
-================================
+4 First ideas for troubleshooting
+=================================
 
 Here we listed some troubles and where to find them:
 

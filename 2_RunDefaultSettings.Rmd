@@ -150,7 +150,7 @@ Postprocessing starts after gams runs finished. If a `fulldata.gdx` was created,
 
 Several of these steps will generate terminal output. More information in tutorial `5_AnalysingModelOutputs.Rmd`.
 
-# 4 First ideas of troubleshooting
+# 4 First ideas for troubleshooting
 
 Here we listed some troubles and where to find them: 
 
