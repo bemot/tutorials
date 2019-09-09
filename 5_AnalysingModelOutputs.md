@@ -2,30 +2,30 @@ Analyzing MAgPIE model outputs
 ================
 Isabelle Weindl (<weindl@pik-potsdam.de>)
 
--   [1. Introduction](#introduction)
-    -   [1.1. Output analysis](#output-analysis)
-    -   [1.2. Learning objectives](#learning-objectives)
--   [2. Model-internal R-scripts for output analysis](#model-internal-r-scripts-for-output-analysis)
-    -   [2.1. Execution of model-internal output scripts via the MAgPIE configuration file](#execution-of-model-internal-output-scripts-via-the-magpie-configuration-file)
-    -   [2.2. Execution of model-internal output scripts in the command window](#execution-of-model-internal-output-scripts-in-the-command-window)
-    -   [2.3. Exercise](#exercise)
--   [3. Automated model validation](#automated-model-validation)
-    -   [3.1. Generation of validation pdfs](#generation-of-validation-pdfs)
-    -   [3.2. Coverage of model outputs](#coverage-of-model-outputs)
-    -   [3.3. Exercise](#exercise-1)
--   [4. Interactive scenario analysis](#interactive-scenario-analysis)
-    -   [4.1. AppMAgPIE](#appmagpie)
-    -   [4.2. Exercise](#exercise-2)
--   [5. Analysis of outputs with the magpie4 library](#analysis-of-outputs-with-the-magpie4-library)
-    -   [5.1. Overview on the magpie4 library](#overview-on-the-magpie4-library)
-    -   [5.2. Exercise](#exercise-3)
--   [6. Analysis of outputs with the gdx library](#analysis-of-outputs-with-the-gdx-library)
--   [7. Lessons learned](#lessons-learned)
+-   [1 Introduction](#introduction)
+    -   [1.1 Output analysis](#output-analysis)
+    -   [1.2 Learning objectives](#learning-objectives)
+-   [2 Model-internal R-scripts for output analysis](#model-internal-r-scripts-for-output-analysis)
+    -   [2.1 Execution of model-internal output scripts via the MAgPIE configuration file](#execution-of-model-internal-output-scripts-via-the-magpie-configuration-file)
+    -   [2.2 Execution of model-internal output scripts in the command window](#execution-of-model-internal-output-scripts-in-the-command-window)
+    -   [2.3 Exercise](#exercise)
+-   [3 Automated model validation](#automated-model-validation)
+    -   [3.1 Generation of validation pdfs](#generation-of-validation-pdfs)
+    -   [3.2 Coverage of model outputs](#coverage-of-model-outputs)
+    -   [3.3 Exercise](#exercise-1)
+-   [4 Interactive scenario analysis](#interactive-scenario-analysis)
+    -   [4.1 AppMAgPIE](#appmagpie)
+    -   [4.2 Exercise](#exercise-2)
+-   [5 Analysis of outputs with the magpie4 library](#analysis-of-outputs-with-the-magpie4-library)
+    -   [5.1 Overview on the magpie4 library](#overview-on-the-magpie4-library)
+    -   [5.2 Exercise](#exercise-3)
+-   [6 Analysis of outputs with the gdx library](#analysis-of-outputs-with-the-gdx-library)
+-   [7 Lessons learned](#lessons-learned)
 
-1. Introduction
-===============
+1 Introduction
+==============
 
-### 1.1. Output analysis
+### 1.1 Output analysis
 
 After having successfully started and accomplished a simulation run, the next step is to evaluate the simulation results. In case you have not yet conducted an own MAgPIE simulation or your simulation is still running, you can download the model runs produced for the MAgPIE 4 modeling framework paper (<https://doi.org/10.5281/zenodo.1485276>) and copy the folders containing the simulation results into the **output** folder of your local version of the MAgPIE model.
 
@@ -33,7 +33,7 @@ There are several ways to assess and evaluate MAgPIE results. This tutorial give
 
 For each simulation, results are written to a folder that is created automatically as a combination of **model title** name and the **current date** inside the **output** folder of the model.
 
-### 1.2. Learning objectives
+### 1.2 Learning objectives
 
 The goal of this exercise is to use several tools for output analysis. After completion of this exercise, you'll be able to:
 
@@ -43,10 +43,10 @@ The goal of this exercise is to use several tools for output analysis. After com
 4.  Use the **magpie4 library** for output analysis.
 5.  Analyse outputs with the **gdx library**.
 
-2. Model-internal R-scripts for output analysis
-===============================================
+2 Model-internal R-scripts for output analysis
+==============================================
 
-### 2.1. Execution of model-internal output scripts via the MAgPIE configuration file
+### 2.1 Execution of model-internal output scripts via the MAgPIE configuration file
 
 In the file "config/default.cfg", it is possible to indicate which R-scripts are executed for output analysis after a model run is finished. Scripts evaluating single runs are stored in the folder **scripts/output/single**, while the folder **scripts/output/comparison** contains scripts that compare model output across several runs. In the default MAgPIE configuration, the scripts *rds\_report* (to be used in appMAgPIE; see explanations below), *validation* and *interpolation* are selected via cfg$output:
 
@@ -54,7 +54,7 @@ In the file "config/default.cfg", it is possible to indicate which R-scripts are
 cfg$output <- c("rds_report","validation","interpolation")
 ```
 
-### 2.2. Execution of model-internal output scripts in the command window
+### 2.2 Execution of model-internal output scripts in the command window
 
 Output scripts that are included in the folders **scripts/output/single** and **scripts/output/comparison** can also be executed via command window. To do so, windows users can open a command line prompt in the MAgPIE model folder by using **shift** + **right click** and then selecting *open command window here* option.
 
@@ -94,18 +94,18 @@ Selection of run submission type
 
 Now, the selected scripts are executed. After completion, the results are written in the respective folder of the simulation run (combination of **model title** name and the **current date** inside the **output** folder of the model).
 
-### 2.3. Exercise
+### 2.3 Exercise
 
 Execute the model-internal output script **report.R** via command window. This script collects the results of several report-functions - that calculate many key output variables like Production, Land Use or Yields - and writes them into one mif-file that can be read with text editors.
 
-3. Automated model validation
-=============================
+3 Automated model validation
+============================
 
-### 3.1. Generation of validation pdfs
+### 3.1 Generation of validation pdfs
 
 The automated model validation is an important example of output analysis based on model-internal scripts (see section 2). If the validation script is executed (either by selection via cfg$output as explained in 2.1. or by execution via command window as explained in 2.2.), a standard evaluation pdf is created that validates numerous model outputs with a validation database containing historical data and projections for most outputs returned by the model, either visually or via statistical tests. A standard evaluation PDF consists of hundreds of evaluation outputs and usually has a length of around 1800 pages. By evaluating the model outputs on such a broad level rather than focusing only on key outputs, it allows getting a more complete picture of the corresponding simulation. As an example of such validation files, you can download the evaluation documents produced for all runs shown in the MAgPIE 4 framework paper (<https://doi.org/10.5281/zenodo.1485303>).
 
-### 3.2. Coverage of model outputs
+### 3.2 Coverage of model outputs
 
 The table of contents of the validation pdf gives a good overview about the breadth of model outputs that can be simulated with a MAgPIE standard simulation, even though the validation pdf only shows a subset of possible model outputs:
 
@@ -114,19 +114,19 @@ The table of contents of the validation pdf gives a good overview about the brea
 Table of contents of the validation pdf
 </p>
 
-### 3.3. Exercise
+### 3.3 Exercise
 
 Open a validation pdf (either in a folder containing your own simulation results or the downloaded MAgPIE simulation runs used for the MAgPIE4 paper) and
 
 1.  make yourself familiar with the structure of the document and the hierarchy of outputs as displayed by the table of contents as well as
 2.  have a look at some figures displaying model outputs of your interest.
 
-4. Interactive scenario analysis
-================================
+4 Interactive scenario analysis
+===============================
 
 The automated model validation is a good tool for visually evaluating a broad range of model outputs. However, comparison between model runs, i.e. between different scenarios, is rather difficult and inconvenient if the model results are scattered across different large PDF files.
 
-### 4.1. AppMAgPIE
+### 4.1 AppMAgPIE
 
 To overcome this issue, we developed the interactive scenario analysis and evaluation tools appMAgPIE and appMAgPIElocal as part of the library **shinyresults** (<https://github.com/pik-piam/shinyresults>), which show evaluation plots for multiple scenarios including historical data and other projections based on an interactive selection of regions and variables. You can use this tool by running the following R command in the main folder of your model, which will automatically collect all runs in the output folder and visualize them:
 
@@ -148,7 +148,7 @@ You can use filters to select a subset of all runs stored in the output folder o
 Run selection by using a filter
 </p>
 
-### 4.2. Exercise
+### 4.2 Exercise
 
 Choose *title* as filter and select 2 simulations that are stored in the output folder of your model, e.g. the SSP2 and SSP3 simulations from the downloaded set of MAgPIE runs for the MAgPIE4 paper:
 
@@ -173,10 +173,10 @@ Selection of variables for line plots
 
 Now, make yourself familiar with the features of the app. You can for example select a subset of regions or a subset of time steps for which the results should be plotted. Moreover, you can free the y-axis, include or exclude validation data (if available) and download the plot.
 
-5. Analysis of outputs with the magpie4 library
-===============================================
+5 Analysis of outputs with the magpie4 library
+==============================================
 
-### 5.1. Overview on the magpie4 library
+### 5.1 Overview on the magpie4 library
 
 If you want to go beyond visual output analysis and predefined output evaluation facilitated by scripts in the model folders **scripts/output/single** and **scripts/output/comparison**, you can use the functionality of the R package *magpie4* (<https://github.com/pik-piam/magpie4>). This library contains a list of common functions for extracting outputs from the MAgPIE model which are also the basis for the generation of the automated validation pdf. For a quick overview on the functions which are included in the library, you can scan the folder **magpie4/R**. The following figure shows a subset of R-files included in **magpie4/R**:
 
@@ -205,15 +205,15 @@ You can click on the index and search for interesting functions, e.g. **carbonst
 Help page of the carbonstock-function of the magpie4 library
 </p>
 
-### 5.2. Exercise
+### 5.2 Exercise
 
 Apply the function *carbonstock* for calculations in R, by
 
 1.  Use the default settings of the arguments of the function
 2.  Change the arguments of the function, e.g. set the level from "cell" to "reg".
 
-6. Analysis of outputs with the gdx library
-===========================================
+6 Analysis of outputs with the gdx library
+==========================================
 
 The **gdx library** (<https://github.com/pik-piam/gdx>) allows for directly accessing objects contained in the fulldata.gdx via the function **readGDX**. A pragmatic way to learn how to use this function for the extraction of interesting information from the fulldata.gdx is to open R-files of the magpie4 library within Rstudio. Most of the magpie4 functions make use of **readGDX**.
 
@@ -230,8 +230,8 @@ It is possible to extract various GAMS objects like *"sets"*, *"equations"*, *"p
 
 With the argument *select=list(type="level")*, you can select the levels of endogenous variables, with *select=list(type="marginal")* you can extract the marginal values of these variables.
 
-7. Lessons learned
-==================
+7 Lessons learned
+=================
 
 1.  You have an **overview on several tools** analysing MAgPIE outputs.
 2.  You know how to start **model-internal R-scripts**.
