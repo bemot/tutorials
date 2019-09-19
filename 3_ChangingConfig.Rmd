@@ -5,19 +5,12 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: Abhijeet Mishra (mishra@pik-potsdam.de)
 output:
   rmarkdown::github_document:
-#    toc: yes
-    includes:  
-      in_header: preamble.tex
+    toc: yes
 ---
 
-\tableofcontents
-\listoffigures
-\listoftables
-\newpage
+# 1 Introduction
 
-# 1. Introduction
-
-## 1.1. What is configuration 
+## 1.1 What is configuration 
 
 In computing, configuration files (or config files) are files used to configure the parameters and initial settings for some computer programs. In MAgPIE context, a config file applies desired settings to the model. MAgPIE users may be expected to modify config files by hand using a simple text editor as these files are human-editable plain texts. 
 
@@ -25,13 +18,13 @@ MAgPIE reads its configuration file just before starting a model run. Editing th
 
 We'll discuss *writing your own start script* in the next session which changes the model setting automatically.
 
-## 1.2. Relevence to MAgPIE 
+## 1.2 Relevence to MAgPIE 
 
 Across Unix-like operating systems many different configuration-file formats exist, with each application or service potentially having a unique format, but there is a strong tradition of them being in human-editable plain text. Filename extensions of .cnf, .conf, .cfg, .cf or as well .ini and similar are often used. MAgPIE configuration file has a **.cfg** extension.
 
 MAgPIE 4.1 is designed on a *modular model structure*. This means that the different *components* of the model interact with each other to act as a complete model. These components are called **modules** in MAgPIE terminology. These modules are individual entities and can be thought of as a **switch(es)** that can be turned on or off.
 
-## 1.3. Learning objectives
+## 1.3 Learning objectives
 
 The goal of this exercise is to make changes to the *default* configuration. After completion of this exercise, you'll be able to:
 
@@ -54,7 +47,7 @@ The goal of this exercise is to make changes to the *default* configuration. Aft
 
 \newpage
 
-# 2. Getting started
+# 2 Getting started
 
 As stated earlier, MAgPIE configuration (or settings) can be changed by hand using a normal text editor (notepad, notepad++ etc.). It is expected that the participants of the workshop have already set-up a MAgPIE clone^[**Cloning a repository**: https://help.github.com/en/articles/cloning-a-repository] from the latest MAgPIE version available on GitHub^[**MAgPIE repo**: https://github.com/magpiemodel/magpie].
 
@@ -81,7 +74,7 @@ Make sure that you have the following files and folders:
 \
 
 \newpage
-# 3. MAgPIE configuration
+# 3 MAgPIE configuration
 
 Users are requested to follow the following procedure in order to check the config file for MAgPIE:
 
@@ -155,9 +148,9 @@ MAgPIE is modular in structure and the various modules can be seen in the **gms*
 
 \newpage
 
-# 4. Exercises
+# 4 Exercises
 
-## 4.1. Changing the title
+## 4.1 Changing the title
 
 Let us try to see what is the default title of MAgPIE runs. This can be seen by looking for the following text in default.cfg file (line 17): 
 \
@@ -204,7 +197,7 @@ For example:
 cfg$title <- "mag4workshop_PIK"
 ``` 
 
-## 4.2. Changing the time step
+## 4.2 Changing the time step
 
 MAgPIE, being a recursive dynamic model, can run with various levels of time steps. 
 
@@ -237,7 +230,7 @@ and set it to 5
 cfg$gms$c_timesteps <- 5
 ``` 
 
-## 4.3. Changing the ouputs generated
+## 4.3 Changing the ouputs generated
 
 MAgPIE is also capable of generating some stylized outputs which can be created automatically once the model run is finished. To see the current output generation settings, look for the following text in the default.cfg file (line 614): 
 \
@@ -266,7 +259,7 @@ cfg$output <- c("rds_report","interpolation")
 
 \newpage
 
-# 5. Running the model with updated configuration
+# 5 Running the model with updated configuration
 
 So far, we have successfully changed:
 
