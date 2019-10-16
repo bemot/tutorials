@@ -12,7 +12,7 @@ output:
 
 ## 1.1 What is configuration 
 
-In computing, configuration files (or config files) are files used to configure the parameters and initial settings for some computer programs. In MAgPIE context, a config file applies desired settings to the model. MAgPIE users may be expected to modify config files by hand using a simple text editor as these files are human-editable plain texts. 
+In computing, configuration files (or config files) are files used to configure the parameters and initial settings for some computer programs. In the MAgPIE context, a config file applies desired settings to the model. MAgPIE users may be expected to modify config files by hand using a simple text editor as these files are human-editable plain texts. 
 
 MAgPIE reads its configuration file just before starting a model run. Editing these config files by hand maybe practical in cases where a user is making one run at a time but more often than not, users may have to work with a combination of different settings for the model. 
 
@@ -134,17 +134,17 @@ knitr::kable(data.frame(No = 1:length(names(cfg)),
                         Config=paste0("cfg$",names(cfg)),
                         Description=
                           c("Model title","Path to the submodel (relative to main model folder)","Input data source",
-                            "Repository containing input data","Shuold data be downloaded even if inputs didn't change?",
+                            "Repository containing input data","Should data be downloaded even if inputs didn't change?",
                             "Yield calibration","Accuracy for yield calibration","Max. iterations if precision goal is not met",
                             "Factor determining new calibration factor's influences on result","Switch for cropland calibration",
-                            "Settings for NPI/NDC recalculation", "National or Sub-national mappinng","Module settings", "How runs should be made",
+                            "Settings for NPI/NDC recalculation", "National or Sub-national mapping","Module settings", "How runs should be made",
                             "Log information","Generation of output files","Results folder name","Files copied to output folder","Folder run statistics location",
                             "Name of the overall model","Model version","Developer mode","Debugging mode"),
                         Focus=c("x","","","","","","","","","","","","x","","","x","","","","","","","")
                         ),caption = "Description of MAgPIE configuration")
 ```
 
-MAgPIE is modular in structure and the various modules can be seen in the **gms** section (cfg\$gms\$\*) of the config file. These modules in MAgPIE can be turned on to a select a *module realization* (in case of multiple *module realizations*, an off setting is also available). 
+MAgPIE is modular in structure and the various modules can be seen in the **gms** section (cfg\$gms\$\*) of the config file. These modules in MAgPIE can be turned on to select a *module realization* (in case of multiple *module realizations*, an off setting is also available). 
 
 \newpage
 
@@ -241,7 +241,7 @@ cfg$output
 
 These ouputs^[Complete list of output R scripts can be found in **scripts/output/single** or **scripts/output/comparison** folders.] can be based on **single** run of the model or can also be **comparative** in nature where the comparison is made between two or more runs. 
 
-The default MAgPIE configuration runs **rds_report** (to be used in appResults), **validation** (as a pdf) and **interpolation** scripts after a model run is finished. Usually, the creation of validation pdf takes quite some, generating a pdf file of about 1500 pages. 
+The default MAgPIE configuration runs **rds_report** (to be used in appResults), **validation** (as a pdf) and **interpolation** scripts after a model run is finished. Usually, the creation of validation pdf takes quite some time, generating a pdf file of about 1500 pages. 
 
 In this exercise, we'll exclude the creation of validation pdf (after a model run) due to time constraints. To do so, you can delete "rds_report","validation","interpolation" from 
 \
@@ -277,7 +277,7 @@ So far, we have successfully changed:
 
 \
 
-Now, Lets try to run the model with this updated configuration. 
+Now, lets try to run the model with this updated configuration. 
 
 To do so, windows users can go to the folder where MAgPIE was cloned and open a command line prompt there. For windows users, this can be done by typing **cmd** or **powershell** at the address bar of the folder where MAgPIE was cloned and then pressing return/enter. 
 
