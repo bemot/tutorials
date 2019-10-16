@@ -54,7 +54,7 @@ Let us have a look at the inner workings of this **default.R** script before we 
 
 # 3 Structure of default start script
 
-If you navigate to **scripts/start/default.R**, you'll see taht the **default.R** script has the following scturcture:
+If you navigate to **scripts/start/default.R**, you'll see that the **default.R** script has the following structure:
 (you can open this script in R or even in a plain-text editor). \
 
 ```{r, eval=FALSE}
@@ -76,7 +76,7 @@ This is a basic script with no complex structure but let's go through this step-
 source("scripts/start_functions.R")
 ```
 
-This tells the R environment to source **start_functions.R** from the **scripts** folder. Due to time constraints, we won't look into what start_functions.R does but we just have to remember that this script loads the conifg file and then loads start_run function with this config which is needed to start MAgPIE runs.
+This tells the R environment to source **start_functions.R** from the **scripts** folder. Due to time constraints, we won't look into what start_functions.R does but we just have to remember that this script loads the config file and then loads start_run function with this config which is needed to start MAgPIE runs.
 
 Moving forward, the second line is: \
 
@@ -209,7 +209,7 @@ cfg$gms$c_timesteps <- 5
 cfg$output <- c("rds_report","interpolation")
 ```
 
-You'll see that we had already changed these settings by hand in tutorial 3. Here, these settings will be changed in **deafult config** using the **magpie_workshop.R** starting script which should look like this now: 
+You'll see that we had already changed these settings by hand in tutorial 3. Here, these settings will be changed in **default config** using the **magpie_workshop.R** starting script which should look like this now: 
 \
 
 ```{r, eval=FALSE}
@@ -252,9 +252,9 @@ To do so, the loop should go two times over trade module realizations and then f
 
 ```{r, eval=FALSE}
 
-for(trade_setting in c("deafult_trade","alt_trade")){
+for(trade_setting in c("default_trade","alt_trade")){
   
-  for(forestry_setting in c("deafult_forestry","alt_forestry")){
+  for(forestry_setting in c("default_forestry","alt_forestry")){
     
     change_trade_module_realization   ## Updates cfg
     

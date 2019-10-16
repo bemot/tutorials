@@ -1,7 +1,7 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-09 September, 2019
+13 October, 2019
 
 ### 1 Learning objectives
 

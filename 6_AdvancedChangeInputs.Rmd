@@ -37,7 +37,7 @@ There is a specific procedure on how to handle the changing of the input data. I
 
 ## 2 Demonstration of change in input data for national land-based NDC policies
 
-Once the input data is downloaded to the local MAgPIE repository in forms of different input files in designated input folders (in the core, scripts, modules and module realizations), a user can update or change these input data files. This can be done directly by manipulating the files, but this approach carries a risk that such changes are not documented and that in certain cases the made changes can be overwritten by the repeated download of the date from the declared repositories. In order to avoid this risk, it is recommended to create a local folder that serves as a repository for the patch files that will apply changes to the data by overwriting the original data.  
+Once the input data is downloaded to the local MAgPIE repository in forms of different input files in designated input folders (in the core, scripts, modules and module realizations), a user can update or change these input data files. This can be done directly by manipulating the files, but this approach carries a risk that such changes are not documented and that in certain cases the made changes can be overwritten by the repeated download of the data from the declared repositories. In order to avoid this risk, it is recommended to create a local folder that serves as a repository for the patch files that will apply changes to the data by overwriting the original data.  
 
 ### 2.1 Create folder for local input data repository
 
@@ -120,5 +120,5 @@ These prepared inputs can be used instead of the default regional definition inp
 
 # 4. Excercise: 
 
-Write your own starting script that will test the scenario with changed NDC policy for the USA described above. None of the changes should actually occur in the default.cfg, but the starting scrip should introduce them to the loaded cfg object instead. 
+Write your own starting script that will test the scenario with changed NDC policy for the USA described above. None of the changes should actually occur in the default.cfg, but instead the starting script should introduce them to the loaded cfg object. 
 
