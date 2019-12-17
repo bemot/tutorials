@@ -22,7 +22,7 @@ completion of this exercise, you’ll be able to:
 
 # 2 Start Scripts
 
-To run the model execute within in terminal (cmd for Windows, shell for
+To run the model execute in terminal (cmd for Windows, shell for
 Linux, MacOS) in the main folder of the model:
 
 ``` bash
