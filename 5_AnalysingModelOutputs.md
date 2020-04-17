@@ -2,6 +2,35 @@ Analyzing MAgPIE model outputs
 ================
 Isabelle Weindl (<weindl@pik-potsdam.de>)
 
+  - [1 Introduction](#introduction)
+      - [1.1 Output analysis](#output-analysis)
+      - [1.2 Learning objectives](#learning-objectives)
+  - [2 Model-internal R-scripts for output
+    analysis](#model-internal-r-scripts-for-output-analysis)
+      - [2.1 Execution of model-internal output scripts via the MAgPIE
+        configuration
+        file](#execution-of-model-internal-output-scripts-via-the-magpie-configuration-file)
+      - [2.2 Execution of model-internal output scripts in the command
+        window](#execution-of-model-internal-output-scripts-in-the-command-window)
+      - [2.3 Exercise](#exercise)
+  - [3 Automated model validation](#automated-model-validation)
+      - [3.1 Generation of validation
+        pdfs](#generation-of-validation-pdfs)
+      - [3.2 Coverage of model outputs](#coverage-of-model-outputs)
+      - [3.3 Exercise](#exercise-1)
+  - [4 Interactive scenario analysis](#interactive-scenario-analysis)
+      - [4.1 Interactive scenario analysis with
+        appResultsLocal](#interactive-scenario-analysis-with-appresultslocal)
+      - [4.2 Exercise](#exercise-2)
+  - [5 Analysis of outputs with the magpie4
+    library](#analysis-of-outputs-with-the-magpie4-library)
+      - [5.1 Overview on the magpie4
+        library](#overview-on-the-magpie4-library)
+      - [5.2 Exercise](#exercise-3)
+  - [6 Analysis of outputs with the gdx
+    library](#analysis-of-outputs-with-the-gdx-library)
+  - [7 Lessons learned](#lessons-learned)
+
 # 1 Introduction
 
 ### 1.1 Output analysis
@@ -35,8 +64,7 @@ After completion of this exercise, you’ll be able to:
 3.  Use the evaluation tool **appResultsLocal** of the library
     **shinyresults**.
 4.  Use the **magpie4 library** for output analysis.
-5.  Analyse outputs with the **gdx
-library**.
+5.  Analyse outputs with the **gdx library**.
 
 # 2 Model-internal R-scripts for output analysis
 
@@ -70,8 +98,7 @@ Rscript output.R
 ```
 
 You are now asked to choose the output mode: 1: Output for single run 2:
-Comparison across
-runs
+Comparison across runs
 
 <img src="figures/Rscript_outputR.png" title="Executing output scripts via command window" alt="Executing output scripts via command window" width="70%" style="display: block; margin: auto;" />
 
@@ -82,8 +109,7 @@ analysis:
 <img src="figures/Rscript_output_runselection.png" title="Selection of model runs" alt="Selection of model runs" width="70%" style="display: block; margin: auto;" />
 
 In the next step, you can interactively indicate which model-internal
-output scripts you want to
-execute:
+output scripts you want to execute:
 
 <img src="figures/Rscript_output_scriptselection.png" title="Selection of model-internal output scripts" alt="Selection of model-internal output scripts" width="70%" style="display: block; margin: auto;" />
 
@@ -102,7 +128,8 @@ Execute the model-internal output script **report.R** via command
 window. This script collects the results of several report-functions -
 that calculate many key output variables like Production, Land Use or
 Yields - and writes them into one mif-file that can be read with text
-editors.
+editors. Please refer to the `vignette("mif")` of the package *mip*
+(model intercomparison plots) to learn more about the mif format.
 
 # 3 Automated model validation
 
@@ -128,8 +155,7 @@ MAgPIE 4 framework paper (<https://doi.org/10.5281/zenodo.1485303>).
 The table of contents of the validation pdf gives a good overview about
 the breadth of model outputs that can be simulated with a MAgPIE
 standard simulation, even though the validation pdf only shows a subset
-of possible model
-outputs:
+of possible model outputs:
 
 <img src="figures/toc_validationpdf.png" title="Table of contents of the validation pdf" alt="Table of contents of the validation pdf" width="70%" style="display: block; margin: auto;" />
 
@@ -170,16 +196,14 @@ shinyresults::appResultsLocal()
 ```
 
 This command opens an interactive window, where you can select the
-simulations that you want to
-evaluate.
+simulations that you want to evaluate.
 
 <img src="figures/appResults_window.png" title="Interactive MAgPIE app" alt="Interactive MAgPIE app" width="70%" style="display: block; margin: auto;" />
 
 You can use filters to select a subset of all runs stored in the output
 folder of the model, for example by searching for runs that have been
 finished at a certain day or by searching for keywords in the title of
-the simulation
-runs:
+the simulation runs:
 
 <img src="figures/appResults_runselection.png" title="Run selection by using a filter" alt="Run selection by using a filter" width="70%" style="display: block; margin: auto;" />
 
@@ -187,8 +211,7 @@ runs:
 
 Choose *title* as filter and select 2 simulations that are stored in the
 output folder of your model, e.g. the SSP2 and SSP5 simulations from the
-downloaded set of MAgPIE
-runs:
+downloaded set of MAgPIE runs:
 
 <img src="figures/appResults_runselection_title.png" title="How to use the title for filtering runs" alt="How to use the title for filtering runs" width="70%" style="display: block; margin: auto;" />
 
@@ -196,15 +219,13 @@ After having selected the subset of runs that you want to analyse, click
 the button *Load selection*. Now, you can click on the tab *LinePLot*.
 You will then see on the right hand side line plots showing the
 development of population for historical and future time steps for all
-model regions and on the global
-scale:
+model regions and on the global scale:
 
 <img src="figures/appResults_LinePlot.png" title="Regional and global development of population" alt="Regional and global development of population" width="70%" style="display: block; margin: auto;" />
 
 Now, choose a variable of your interest, either by scrolling through the
-drop-down menu or write a key word in the input field, e.g. “cropland”,
-to reduce the options in the
-menu.
+drop-down menu or write a key word in the input field, e.g. “cropland”,
+to reduce the options in the menu.
 
 <img src="figures/appResults_LinePlot_variables.png" title="Selection of variables for line plots" alt="Selection of variables for line plots" width="70%" style="display: block; margin: auto;" />
 
@@ -226,8 +247,7 @@ common functions for extracting outputs from the MAgPIE model which are
 also the basis for the generation of the automated validation pdf. For a
 quick overview on the functions which are included in the library, you
 can scan the folder **magpie4/R**. The following figure shows a subset
-of R-files included in
-**magpie4/R**:
+of R-files included in **magpie4/R**:
 
 <img src="figures/subset_functions_magpie4.png" title="Subset of R functions of the magpie4 library" alt="Subset of R functions of the magpie4 library" width="70%" style="display: block; margin: auto;" />
 
@@ -246,9 +266,8 @@ library(magpie4)
 ?magpie4
 ```
 
-You can click on the index and search for interesting functions, e.g.
-**carbonstock**, and read the respective help
-page:
+You can click on the index and search for interesting functions,
+e.g. **carbonstock**, and read the respective help page:
 
 <img src="figures/magpie4_help_carbonstock.png" title="Help page of the carbonstock-function of the magpie4 library" alt="Help page of the carbonstock-function of the magpie4 library" width="70%" style="display: block; margin: auto;" />
 
@@ -272,8 +291,7 @@ to open R-files of the magpie4 library within Rstudio. Most of the
 magpie4 functions make use of **readGDX**.
 
 In the function *carbonstock* of the **magpie4** library, we see several
-instances where **readGDX** is used,
-e.g.:
+instances where **readGDX** is used, e.g.:
 
 ``` r
 a <- readGDX(gdx,"ov_carbon_stock",select=list(type="level"),react="silent")

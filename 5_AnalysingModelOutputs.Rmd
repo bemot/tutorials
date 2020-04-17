@@ -75,7 +75,7 @@ Now, the selected script is executed. After completion, the results are written 
 
 
 ### 2.3 Exercise
-Execute the model-internal output script **report.R** via command window. This script collects the results of several report-functions - that calculate many key output variables like Production, Land Use or Yields - and writes them into one mif-file that can be read with text editors.
+Execute the model-internal output script **report.R** via command window. This script collects the results of several report-functions - that calculate many key output variables like Production, Land Use or Yields - and writes them into one mif-file that can be read with text editors. Please refer to the `vignette("mif")` of the package *mip* (model intercomparison plots) to learn more about the mif format.
 
 
 # 3 Automated model validation
