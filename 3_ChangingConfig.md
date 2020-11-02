@@ -1,26 +1,17 @@
 Changing MAgPIE Configuration
 ================
 Abhijeet Mishra (<mishra@pik-potsdam.de>)
-18 July, 2019
+12 October, 2019
 
-\usepackage{float}
-\let\origfigure\figure
-\let\endorigfigure\endfigure
-\renewenvironment{figure}[1][2] {
-    \expandafter\origfigure\expandafter[H]
-} {
-    \endorigfigure
-}
+# 1 Introduction
 
-# 1\. Introduction
-
-## 1.1. What is configuration
+## 1.1 What is configuration
 
 In computing, configuration files (or config files) are files used to
 configure the parameters and initial settings for some computer
-programs. In MAgPIE context, a config file applies desired settings to
-the model. MAgPIE users may be expected to modify config files by hand
-using a simple text editor as these files are human-editable plain
+programs. In the MAgPIE context, a config file applies desired settings
+to the model. MAgPIE users may be expected to modify config files by
+hand using a simple text editor as these files are human-editable plain
 texts.
 
 MAgPIE reads its configuration file just before starting a model run.
@@ -31,7 +22,7 @@ work with a combination of different settings for the model.
 We’ll discuss *writing your own start script* in the next session which
 changes the model setting automatically.
 
-## 1.2. Relevence to MAgPIE
+## 1.2 Relevence to MAgPIE
 
 Across Unix-like operating systems many different configuration-file
 formats exist, with each application or service potentially having a
@@ -46,7 +37,7 @@ as a complete model. These components are called **modules** in MAgPIE
 terminology. These modules are individual entities and can be thought of
 as a **switch(es)** that can be turned on or off.
 
-## 1.3. Learning objectives
+## 1.3 Learning objectives
 
 The goal of this exercise is to make changes to the *default*
 configuration. After completion of this exercise, you’ll be able to:
@@ -67,7 +58,7 @@ configuration. After completion of this exercise, you’ll be able to:
 
   
 
-# 2\. Getting started
+# 2 Getting started
 
 As stated earlier, MAgPIE configuration (or settings) can be changed by
 hand using a normal text editor (notepad, notepad++ etc.). It is
@@ -90,7 +81,7 @@ Make sure that you have the following files and folders:
 6.  output.R, scripts.R  
 7.  .Rprofile, .gitignore, .travis.yml  
 
-# 3\. MAgPIE configuration
+# 3 MAgPIE configuration
 
 Users are requested to follow the following procedure in order to check
 the config file for MAgPIE:
@@ -153,14 +144,14 @@ file).
 |  2 | cfg$model            | Path to the submodel (relative to main model folder)             |       |
 |  3 | cfg$input            | Input data source                                                |       |
 |  4 | cfg$repositories     | Repository containing input data                                 |       |
-|  5 | cfg$force\_download  | Shuold data be downloaded even if inputs didn’t change?          |       |
+|  5 | cfg$force\_download  | Should data be downloaded even if inputs didn’t change?          |       |
 |  6 | cfg$recalibrate      | Yield calibration                                                |       |
 |  7 | cfg$calib\_accuracy  | Accuracy for yield calibration                                   |       |
 |  8 | cfg$calib\_maxiter   | Max. iterations if precision goal is not met                     |       |
 |  9 | cfg$damping\_factor  | Factor determining new calibration factor’s influences on result |       |
 | 10 | cfg$calib\_cropland  | Switch for cropland calibration                                  |       |
 | 11 | cfg$recalc\_npi\_ndc | Settings for NPI/NDC recalculation                               |       |
-| 12 | cfg$policyregions    | National or Sub-national mappinng                                |       |
+| 12 | cfg$policyregions    | National or Sub-national mapping                                 |       |
 | 13 | cfg$gms              | Module settings                                                  | x     |
 | 14 | cfg$sequential       | How runs should be made                                          |       |
 | 15 | cfg$logoption        | Log information                                                  |       |
@@ -177,12 +168,12 @@ Description of MAgPIE configuration
 
 MAgPIE is modular in structure and the various modules can be seen in
 the **gms** section (cfg$gms$\*) of the config file. These modules in
-MAgPIE can be turned on to a select a *module realization* (in case of
+MAgPIE can be turned on to select a *module realization* (in case of
 multiple *module realizations*, an off setting is also available).
 
-# 4\. Exercises
+# 4 Exercises
 
-## 4.1. Changing the title
+## 4.1 Changing the title
 
 Let us try to see what is the default title of MAgPIE runs. This can be
 seen by looking for the following text in default.cfg file (line 17):  
@@ -238,7 +229,7 @@ For example:
 cfg$title <- "mag4workshop_PIK"
 ```
 
-## 4.2. Changing the time step
+## 4.2 Changing the time step
 
 MAgPIE, being a recursive dynamic model, can run with various levels of
 time steps.
@@ -277,7 +268,7 @@ and set it to 5
 cfg$gms$c_timesteps <- 5
 ```
 
-## 4.3. Changing the ouputs generated
+## 4.3 Changing the ouputs generated
 
 MAgPIE is also capable of generating some stylized outputs which can be
 created automatically once the model run is finished. To see the current
@@ -295,7 +286,7 @@ two or more runs.
 The default MAgPIE configuration runs **rds\_report** (to be used in
 appResults), **validation** (as a pdf) and **interpolation** scripts
 after a model run is finished. Usually, the creation of validation pdf
-takes quite some, generating a pdf file of about 1500 pages.
+takes quite some time, generating a pdf file of about 1500 pages.
 
 In this exercise, we’ll exclude the creation of validation pdf (after a
 model run) due to time constraints. To do so, you can delete
@@ -311,7 +302,7 @@ and replace it with “rds\_report”,“interpolation”
 cfg$output <- c("rds_report","interpolation")
 ```
 
-# 5\. Running the model with updated configuration
+# 5 Running the model with updated configuration
 
 So far, we have successfully changed:
 
@@ -329,7 +320,7 @@ So far, we have successfully changed:
 
   
 
-Now, Lets try to run the model with this updated configuration.
+Now, lets try to run the model with this updated configuration.
 
 To do so, windows users can go to the folder where MAgPIE was cloned and
 open a command line prompt there. For windows users, this can be done by

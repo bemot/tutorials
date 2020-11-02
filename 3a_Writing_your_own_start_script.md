@@ -1,20 +1,11 @@
 Writing your own start script
 ================
 Abhijeet Mishra (<mishra@pik-potsdam.de>)
-18 July, 2019
+13 October, 2019
 
-\usepackage{float}
-\let\origfigure\figure
-\let\endorigfigure\endfigure
-\renewenvironment{figure}[1][2] {
-    \expandafter\origfigure\expandafter[H]
-} {
-    \endorigfigure
-}
+# 1 Introduction
 
-# 1\. Introduction
-
-## 1.1. Why use your own starting script
+## 1.1 Why use your own starting script
 
 MAgPIE reads its specified configuration file just before starting a
 model run. Editing these config files by hand maybe practical in cases
@@ -29,7 +20,7 @@ such cases, editing config files by hand is not advisable. Here, a good
 programming practice would be to rather change these config files using
 an R script which changes the config settings in automatised manner.
 
-## 1.2. Relevence to MAgPIE
+## 1.2 Relevence to MAgPIE
 
 With MAgPIE having a lot of modules and settings which can be changed
 and used in various combinations, it becomes imperative that a user be
@@ -37,7 +28,7 @@ able to change a lot of settings concurrently. This can be achieved by
 changing the config file (from tutorial series 3) for turning on or off
 module realizations and other settings.
 
-## 1.3. Learning objectives
+## 1.3 Learning objectives
 
 The goal of this exercise is to write your own starting script. After
 completion of this exercise, you’ll be able to:
@@ -77,10 +68,10 @@ we selected earlier.
 Let us have a look at the inner workings of this **default.R** script
 before we write our own starting script.
 
-# 3\. Structure of default start script
+# 3 Structure of default start script
 
-If you navigate to **scripts/start/default.R**, you’ll see taht the
-**default.R** script has the following scturcture: (you can open this
+If you navigate to **scripts/start/default.R**, you’ll see that the
+**default.R** script has the following structure: (you can open this
 script in R or even in a plain-text editor).  
 
 ``` r
@@ -105,7 +96,7 @@ source("scripts/start_functions.R")
 This tells the R environment to source **start\_functions.R** from the
 **scripts** folder. Due to time constraints, we won’t look into what
 start\_functions.R does but we just have to remember that this script
-loads the conifg file and then loads start\_run function with this
+loads the config file and then loads start\_run function with this
 config which is needed to start MAgPIE runs.
 
 Moving forward, the second line is:  
@@ -117,7 +108,7 @@ start_run(cfg="default.cfg")
 The **start\_run()** function sourced from above is the used to start
 the run.
 
-# 4\. Writing our own start script
+# 4 Writing our own start script
 
 Before we start writing our own start script, let’s first discuss which
 settings we’d like to change using this start script. For the sake of
@@ -134,7 +125,7 @@ simplicity, let’s just try to change two settings. We’ll make a total of
   
   
 
-## 4.1. Creating a start script from scratch
+## 4.1 Creating a start script from scratch
 
 There are many ways in which you can initialize an R script that can be
 used as a starting script. The easiest way however is to just make a
@@ -165,7 +156,7 @@ source("scripts/start_functions.R")
 start_run(cfg="default.cfg")
 ```
 
-## 4.2. Importance of documenting your code/script
+## 4.2 Importance of documenting your code/script
 
 At this point, we’d like to emphasize upon the importance of code
 documentation and comments within the code.
@@ -190,7 +181,7 @@ it is always a good practice to document your code appropriately.
 Also remember that *code never lies, comments sometimes do*, so keep
 your comments as accurate and precise as possible.
 
-## 4.3. Editing your start script
+## 4.3 Editing your start script
 
 Now that we have the importance of documenting your code out of the way,
 lets go back to writing our script.
@@ -247,7 +238,7 @@ function and also loads the object **cfg** in R environment. Before
 submitting the run with **start\_run()**, we’ll make changes to the
 **default config** loaded in R environment.
 
-### 4.3.1. Adding basic settings
+### 4.3.1 Adding basic settings
 
 Lets add some basic settings before moving to the main changes. These
 changes would be made to the **cfg** object and we’ll use the notation
@@ -269,7 +260,7 @@ cfg$output <- c("rds_report","interpolation")
 ```
 
 You’ll see that we had already changed these settings by hand in
-tutorial 3. Here, these settings will be changed in **deafult config**
+tutorial 3. Here, these settings will be changed in **default config**
 using the **magpie\_workshop.R** starting script which should look like
 this now:  
 
@@ -294,7 +285,7 @@ cfg$gms$c_timesteps <- 5
 cfg$output <- c("rds_report","interpolation")
 ```
 
-### 4.3.2. Adding loop(s)
+### 4.3.2 Adding loop(s)
 
 We’ll now write a loop to go over the different combinations of module
 realiazations. As stated earlier, we’ll make 4 runs with changes to
@@ -318,9 +309,9 @@ module realizations. In principle, this loop’s general structure should
 look like this:  
 
 ``` r
-for(trade_setting in c("deafult_trade","alt_trade")){
+for(trade_setting in c("default_trade","alt_trade")){
   
-  for(forestry_setting in c("deafult_forestry","alt_forestry")){
+  for(forestry_setting in c("default_forestry","alt_forestry")){
     
     change_trade_module_realization   ## Updates cfg
     
@@ -412,7 +403,7 @@ for(trade_setting  in c("selfsuff_reduced","free_apr16")){
 } # <- Closing trade loop
 ```
 
-# 5\. Starting MAgPIE with custom R script
+# 5 Starting MAgPIE with custom R script
 
 So far, we have learned:
 
