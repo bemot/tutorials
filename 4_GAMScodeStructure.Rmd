@@ -1,20 +1,20 @@
 ---
 title: "Look at the GAMS code and its structure"
 subtitle: MAgPIE model development team (magpie@pik-potsdam.de)
-author: "Kristine Karstens (karstens@pik-potsdam.de), Felicitas Beier (beier@pik-potsdam.de)"
+author: "Kristine Karstens (karstens@pik-potsdam.de), Felicitas Beier (beier@pik-potsdam.de), Abhijeet Mishra (mishra@pik-potsdam.de)"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   rmarkdown::github_document:
     toc: yes
 ---
 
-# 0 Preface: Structure of the MAgPIE Model
+## Preface: Structure of the MAgPIE Model
 
 MAgPIE (Model for Agricultural Production and its Impacts on the Environment) is a modular open source framework for modeling global
-land-systems. Before looking into the code structure, we want you to understand the basic dependecies of what we call 'modules'.
-The full interdependencies and more detailed information can be found in our model documentation: https://rse.pik-potsdam.de/doc/magpie/
+land-systems. Before looking into the code structure, we want you to understand the basic dependencies of what we call 'modules'.
+The full interdependence and more detailed information can be found in our model documentation: https://rse.pik-potsdam.de/doc/magpie/
 
-Here we want to just shortly draw your attention on the 'main line' of module interdependencies.
+Here we want to shortly draw your attention on the 'main lines' of module interdependence.
 
 ```{r, echo=FALSE, out.width = '100%',fig.align='center'}
 knitr::include_graphics("figures/magpie_model.gif")
@@ -29,21 +29,21 @@ knitr::include_graphics("figures/magpie_model.gif")
 - Around this 'main line' of agricultural production modules are build
     - assessing impacts and policy interactions (upper part)  
     - adding more detail to the production chain (lower part).
+    
+## 1. Introduction
 
-# 1 Introduction
-
-The inner core of the MAgPIE model is written in GAMS. For the execution of the code, all parts of the code have to be put into a single file, the `full.gms`. All code chunks are stored within the `modules` folder. Every module, representing a component of the model, has several realizations, which are found in the `modules` folder. 
+The inner core of the MAgPIE model is written in GAMS. For the execution of the code, all parts of the code have to be put into a single file, the `full.gms` (done automatically). All code chunks are stored within the `modules` folder. Every module, representing a component of the model, has several realizations, which are found in the `modules` folder. 
 For the final model execution, exactly one realization of each module is chosen and included.  The  configuration settings that are set in `default.cfg` (or inside the run scripts) determine the realization entering the `full.gms`. 
 
 ### Learning objectives
 
 The goal of this exercise is to understand the basic structure of the GAMS code. After completion of this exercise, you will be able to:
 
-1. Navigate though the GAMS code.
+1. Navigate though the GAMS code of MAgPIE.
 2. Understand the basic structure of modules and realizations.
 3. Understand the basic rules of variable or parameter naming conventions and their meanings.
 
-# 2.1 Structure of a module
+## 2. Structure of a module
 
 When you open the `modules` folder you will see a long list of all module and the `include.gms` (ensuring inclusion of all modules into the `full.gms`). 
 Looking inside a module folder, every module is built following the same structure:
@@ -59,17 +59,17 @@ The module structure contains
 * [module_name].gms file with module description and listing of all realizations 
 * several [realization_name].gms files with realization description and linking to the specific source code
 
-New realizations can be added by keeping that structure (more in `7_advanced_changeCode.Rmd`). In that sense MAgPIE is easily extentable.
+New realizations can be added by keeping that structure (more in `7_advanced_changeCode.Rmd`). In that sense MAgPIE is easily extendable.
 
-# 2.2 Structure within each realization
+### Structure within each realization
 
 Within a realization the source code is distributed over several gms-files. This is nessessary to ensure the correct order of calculations (before, within and after the optimization). Moreover, the correct interfaces for model inputs and outputs are defined by this structure. In the following table, you see the purpose of each gms-file. Note that not every gms-files is needed in every realization. 
 
 
-| gms.file   | function                |
+| gms.file   | function                | 
 |:------------------|:------------------------------------------------------------------|
-| declarations.gms  | Declares all variables, equations, parameters that are central to this realization. |
-| equations.gms     | Contains functional relationships that have to be fullfilled within the optimization. |
+| declarations.gms  | Declares all variables, equations, parameters that are central to this realization. | 
+| equations.gms     | Contains functional relationships that have to be fulfilled within the optimization. |
 | input.gms         | Loads input from `any_module/input` or `any_module/a_realization/input` |
 | sets.gms          | Lists sets that are used (mainly) within this specific realization or are needed for interfaces defined within this realilzation |
 | preloop.gms       | Includes calculations to be executed before the model run. |
@@ -80,11 +80,11 @@ Within a realization the source code is distributed over several gms-files. This
 | not_used.txt      | Lists interfaces (declared in other modules) that are not used within this realization, but in other realizations of the same module | 
 
 
-# 2.3 Coding etiquette variable and parameter naming
+### 2.3 Coding etiquette variable and parameter naming
 
 The MAgPIE model structure is build upon the idea that every module itself is encapsulated just interacting on a **clearly defined interface** with other modules. This reflects the idea that every module represents a separate part of the model, that could be represented in a simple or more sophisticated manner, without relying on other modules. In this sense realizations are replaceable within a module, since all realizations of a module have to deliver/interact with the same interface variables. This is ensured by defined rules for variable and parameter naming.
 
-### Coding Etiquette
+#### Coding Etiquette
 
 The following prefixes are used within the model code:
 
@@ -120,3 +120,4 @@ Suffixes indicate the level of aggregation of an object:
     _glo global aggregation (exception)
 
 
+^[Document version history : https://github.com/magpiemodel/tutorials/commits/master/4_GAMScodeStructure.Rmd] 
