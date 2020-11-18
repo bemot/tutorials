@@ -1,7 +1,7 @@
 ---
 title: "Analyzing MAgPIE model outputs"
 subtitle: MAgPIE model development team (magpie@pik-potsdam.de)
-author: "Isabelle Weindl (weindl@pik-potsdam.de)"
+author: "Isabelle Weindl (weindl@pik-potsdam.de) and Felicitas Beier (beier@pik-potsdam.de)"
 output:
   rmarkdown::github_document:
     toc: yes

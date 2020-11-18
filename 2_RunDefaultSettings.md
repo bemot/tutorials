@@ -1,14 +1,14 @@
 Start running MAgPIE with default settings
 ================
 Kristine Karstens (<karstens@pik-potsdam.de>)
-11 October, 2019
+31 October, 2020
 
 # 1 Introduction
 
-Whereas MAgPIE inner core is written in GAMS, it comes with an outer
+Whereas MAgPIE’s inner core is written in GAMS, it comes with an outer
 layer for data handling in R. This also applies to the start of MAgPIE.
-Moreover this nested structure leads to some characteristics in code
-execution, that should been understand to do basic troubleshooting.
+Moreover, this nested structure leads to some characteristics in code
+execution, that should be understood to do basic troubleshooting.
 
 ### Learning objectives
 
@@ -22,7 +22,7 @@ completion of this exercise, you’ll be able to:
 
 # 2 Start Scripts
 
-To run the model execute in terminal (cmd for Windows, shell for
+To run the model execute within in terminal (cmd for Windows, shell for
 Linux, MacOS) in the main folder of the model:
 
 ``` bash
@@ -74,7 +74,7 @@ Number:
 
 To run a **single model run with settings as stated in default.cfg** you
 can choose start script **`default`**, which can be done by typing `1`
-and confirm via `Enter`. A new selecting list to choose the way of
+and confirm via `Enter`. A new selection list to choose the way of
 executing the code will show up:
 
 ``` bash
@@ -93,13 +93,13 @@ To run a the code within your terminal you choose **`Direct execution`**
 
 ### More details:
 
-  - **`check code`** will execute a test script within R, that check
+  - **`check code`** will execute a test script within R, that checks
     consistence of the code.
-  - **`download data only`** will just execetute a download script.
+  - **`download data only`** will just execute a download script.
   - **`recalibrate`** will recalculate the yield calibration factors.
-    This is usually not nessessary (only if the input files change and
-    than default settings will automatically run the recalibration with
-    the **`default`** run script.)
+    This is usually not necessary (only if the input files change and
+    then the default settings will automatically run the recalibration
+    with the **`default`** run script.)
   - All other start scripts refer to quite specific run settings from
     individual MAgPIE developers. When you become a more advanced users,
     you can also add your own run scripts by saving them in the folder
@@ -127,10 +127,10 @@ steps:
 
 | step                               | tasks:                                                                                                                  | embedded in:                       |
 | :--------------------------------- | :---------------------------------------------------------------------------------------------------------------------- | :--------------------------------- |
-| 1\. job submission                 | load choosen start script, apply choosen submission type                                                                | start.R                            |
+| 1\. job submission                 | load chosen start script, apply chosen submission type                                                                  | start.R                            |
 | \- lock model folder -             | create `.lock` folder to stop co-execution                                                                              | scripts/start\_function.R          |
 | 2\. configurate run and code check | load libraries, configure settings, run `settingsCheck()` (lucode) to check code for consistency                        | scripts/start\_function.R          |
-| 3\. input data                     | check, if data download is nessessary, download data                                                                    | scripts/downloader/download.R      |
+| 3\. input data                     | check whether data download is nessessary, download data                                                                | scripts/downloader/download.R      |
 | 4\. npi/ndc calculation            | calculate for specific cluster and regional settings the representation of land based npi/ndc policies within the model | scripts/npi\_ndc/start\_npi\_ndc.R |
 | 5\. yield calibration              | calculates a regional yield calibration factor based on a pre run of magpie to be inline with FAO production data       | scripts/calibration/calc\_calib.R  |
 | 6\. gams code submission           | execute gams command to final run the gams model, start post-processing after run finished                              | scripts/run\_submit/submit.R       |
