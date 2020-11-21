@@ -1,136 +1,159 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-13 October, 2019
+21 November, 2020
 
-### 1 Learning objectives
+  - [1 Introduction](#introduction)
+  - [2 Learning objectives](#learning-objectives)
+  - [3 Adding a new realization](#adding-a-new-realization)
+  - [4 Testing a new realization](#testing-a-new-realization)
 
-MAgPIE has a modular concept. Each module (e.g. cropland) can have
-several realization (e.g. dynamic and static). This tutorial shows how
-to add new realizations and how to modify existing realizations.
+### 1 Introduction
 
-### 2 Adding a new realization (cropland)
+MAgPIE has a modular concept. Each module (e.g. `pasture`) can have
+several realizations (e.g. `dynamic` and `static`). The purpose of these
+realization is a) to maintain the current default model behavior and b)
+to keep the model operational while developing a new realization. A
+typical use case is the extension of a realization by a specific
+feature. In this case, one would copy the current default realization,
+rename it properly, and apply the wanted changes. Then, the model
+behavior can be compared between the two realizations. Eventually, the
+new realization might become the new default at some point and the old
+realization is deleted.
 
-We want to add a new realization to the cropland module. In the MAgPIE
-4.1 release the cropland module (30\_crop) has only one realization
-called “endo\_jun13”. In this realization irrigation of bioenergy crops
-is prohibited. We will add a new realization, based on “endo\_jun13”,
-which allows for irrigation of bioenergy crops. We will call the new
-realization “endo\_sep19”.
+### 2 Learning objectives
 
-#### Create a new realization by copying an existing one
+This tutorial shows how to add a new realization to a module in the
+MAgPIE model. To illustrate the different steps, we will expand the
+`urban` land module. In the current MAgPIE master, the `urban` land
+module has only a `static` realization. In this tutorial, we will add a
+`dynamic` realization, which changes urban land based on population
+growth.
 
-We first copy-paste the folder “endo\_jun13” and the file
-“endo\_jun13.gms” (both located in “modules/30\_crop”), and rename
-them to “endo\_sep19” and “endo\_sep19.gms” respectivly.
+### 3 Adding a new realization
+
+We want to add a new realization to the `urban` land module. The `urban`
+land module is located here: `modules/34_urban`.
+
+#### Add a new realization by duplicating an existing one
+
+Duplicate the `static` folder and rename it to `dynamic`. Now we need to
+add and edit files in the `dynamic` folder. Add the following files by
+duplicating the `presolve.gms` file: `declarations.gms`, `equations.gms`
+and `preloop.gms`. Open each new file and delete the copied code from
+`presolve.gms`, but keep the copyright header. Now add the following
+content to these files, and modify `presolve.gms` and `realization.gms`.
+
+##### declarations.gms
+
+``` r
+equations
+ q34_urban(j)                             urban land (mio. ha)
+;
+
+parameters
+ p34_pop_growth(t,i) population growth factor between time steps (1)
+;
+```
+
+##### equations.gms
+
+``` r
+q34_urban(j2)..
+ vm_land(j2,"urban") =e= 
+ pcm_land(j2,"urban") * sum((ct,cell(i2,j2)), p34_pop_growth(ct,i2));
+```
+
+##### preloop.gms
+
+``` r
+loop(t$(ord(t) > 1),
+ p34_pop_growth(t,i) = im_pop(t,i)/im_pop(t-1,i);
+);
+```
+
+##### presolve.gms
+
+``` r
+*vm_land.fx(j,"urban") = pcm_land(j,"urban");
+vm_carbon_stock.fx(j,"urban",c_pools) = 0;
+```
+
+##### realization.gms
+
+``` r
+*' @description In the dynamic realization, urban land expands based on population growth.
+*' Carbon stocks are fixed to zero because
+*' information on urban land carbon density is missing.
+
+*' @limitations Carbon stocks are assumed zero.
+```
 
 #### Include it properly via lucode::update\_modules\_embedding()
 
-To include the new realization “endo\_sep19” properly into the GAMS code
-we run a specific R command in the main folder. First navigate in your
+To include the new realization `dynamic` properly into the GAMS code we
+run a specific R command in the main folder. First navigate in your
 command line to the MAgPIE main folder, then open a new R session (type
-“R” followed by ENTER), and then copy-paste the following R command:
-`lucode::update_modules_embedding()`
-
-#### Do a simple modification in the new realization
-
-The prohibition of irrigated bioenergy is specified in the file
-“presolve.gms” within the “endo\_sep19” realization. We just have to
-remove (or comment out) lines 8-9 from this file to allow for irrigation
-of bioenergy crops.
-
-`*vm_area.fx(j,"begr","irrigated")=0;`
-
-`*vm_area.fx(j,"betr","irrigated")=0;`
-
-Finally, we run `lucode::update_fulldataOutput()` to update the
-automatic GAMS code declarations and output definitions.
-
-Note: This command is not needed for this exercise. But if you change,
-add or delete variables/parameters this command is of high importance to
-avoid GAMS compilation errors.
-
-#### Set the new realization in cfg and test the model
-
-For a quick test, we simply set the new realization in the file main.gms
-in line 179 (replace `endo_jun13` by `endo_sep19`). We can then check if
-the model compiles correctly with `gams main.gms action=C`
-
-For starting a model run, we would have to make a change in the config
-file `config/default.cfg` in line 219 (replace `endo_jun13` by
-`endo_sep19`). We could then start a model run with `Rscript start.R
--> 1: default -> 1: Direct execution`.
-
-### 3 Changing an existing realization (cropland)
-
-We now extend the new cropland realization `endo_sep19` by two switches
-related to bioenergy, which increases the flexibility of the
-realization. We add one switch for the type of bioenergy feedstock
-(begr/betr), and another switch for rainfed/irrigated bioenergy
-production. For this we work with dynamic sets, which are filled
-depending on choices in the config file.
-
-#### Define the switch in input.gms
-
-We add the following lines of code to input.gms:
+`R` followed by ENTER), and then copy-paste the following R commands:
 
 ``` r
-$setglobal c30_bioen_type  all
-* options: begr, betr, all
-
-$setglobal c30_bioen_water  rainfed
-* options: rainfed, irrigated, all
+gms::update_fulldataOutput()
+gms::update_modules_embedding()
 ```
 
-#### Define the dynamic sets in sets.gms
+These two commands will add a `postsolve.gms` file, and update the
+`realization.gms` and `declarations.gms` files. Hint: If you change, add
+or delete variables/parameters always run these commands to avoid GAMS
+compilation errors.
 
-We add the following lines of code to sets.gms:
+Run codeCheck to check if all module interfaces exist.
 
 ``` r
-   kbe30(kcr) bio energy activities
-        / betr, begr /
-
-   bioen_type_30(kbe30) dynamic set bioen type
-   bioen_water_30(w) dynamic set bioen water
+gms::codeCheck()
 ```
 
-#### Fill and use the dynmic sets in presolve.gms
+Now you can quit the R session with `q()`.
 
-In presolve.gms we replace lines 8-9 with the following:
+### 4 Testing a new realization
+
+#### Set the new realization in main.gms and cfg and start a model run
+
+For a quick test, we simply set the new realization in the file
+`main.gms` in line 256 (replace `static` by `dynamic`). We can then
+check if the model compiles correctly with this command evoked from the
+command line.
 
 ``` r
-$ifthen "%c30_bioen_type%" == "all" bioen_type_30(kbe30) = yes;
-$else bioen_type_30("%c30_bioen_type%") = yes;
-$endif
-
-$ifthen "%c30_bioen_water%" == "all" bioen_water_30(w) = yes;
-$else bioen_water_30("%c30_bioen_water%") = yes;
-$endif
-
-*' @code
-*' First, all 2nd generation bioenergy area is fixed to zero, irrespective of type and 
-*' rainfed/irrigation.
-vm_area.fx(j,kbe30,w)=0;
-*' Second, the bounds for 2nd generation bioenergy area are released depending on 
-*' the dynamic sets bioen_type_30 and bioen_water_30.
-vm_area.up(j,bioen_type_30,bioen_water_30)=Inf;
-*' @stop
+gams main.gms action=C
 ```
 
-#### Add to config
+Before we start a test run, we reduce the number of time steps to 3. For
+this, we change `$setglobal c_timesteps coup2100` in main.gms in line
+224 to `$setglobal c_timesteps quicktest`.
 
-We can then add `c30_bioen_type` and `c30_bioen_water` to the config
-file `config/default.cfg`, after line
-219.
+Now we can start a test run with this command. This can take a while
+depending on the resources of your machine.
 
 ``` r
-# * (c30_bioen_type): switch for type of bioenergy crops; options: begr, betr, all
-cfg$gms$c30_bioen_type <- "all"               # def = "all"
-# * (c30_bioen_water): switch for irrigation of bioenergy crops; options: rainfed, irrigated, all
-cfg$gms$c30_bioen_water <- "rainfed"               # def = "rainfed"
+gams main.gms
 ```
 
-#### Quick test
+GAMS will create a `fulldata.gdx` file in the main folder.
 
-We can then check if the model compiles correctly with `gams main.gms
-action=C`.
+For starting a productive model run, we would have to change the config
+file `config/default.cfg` in line 489 (replace `static` by `dynamic`).
+We could now start a model run with `Rscript start.R -> 1: default -> 1:
+Direct execution`.
+
+#### Check the results
+
+Start a new R session in the MAgPIE main folder, and execute these
+commands.
+
+``` r
+options(digits=2)
+library(magpie4)
+gdx <- "fulldata.gdx"
+land(gdx,level="glo",type="urban")
+land(gdx,level="reg",type="urban")
+```
