@@ -80,12 +80,14 @@ Now you can quit the R session with `q()`.
 
 ### 4 Testing a new realization
 #### Start a model run
-For a quick test, we simply set the new realization in the file `main.gms` in line 256 (replace `static` by `dynamic`). We can then check if the model compiles correctly with this command evoked from the command line.
+For a quick GAMS test, we simply set the new realization in the file `main.gms` in line 256 (replace `static` by `dynamic`). We can then check if the model compiles correctly with this command evoked from the command line.
 ```{r, eval=FALSE}
 gams main.gms action=C
 ```
+If you get compilation errors, you have to resolve these first. Look into the `main.lst` file. It will tell you what kind of error occurred. 
 
-Before we start a test run, we reduce the number of time steps to 3. For this, we change `$setglobal c_timesteps  coup2100` in main.gms in line 224 to `$setglobal c_timesteps  quicktest`.
+To make our test run as fast as possible, we reduce the number of time steps to 3 and deactivate elastic food demand. 
+For this, we change `$setglobal c_timesteps  coup2100` in main.gms in line 224 to `$setglobal c_timesteps  quicktest`, and change the value of `s15_elastic_demand` from 1 to 0 in line 74 in `modules/15_food/input.gms`.
 
 Now we can start a test run with this command. This can take a while depending on the resources of your machine.
 ```{r, eval=FALSE}
