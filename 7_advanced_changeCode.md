@@ -1,7 +1,7 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-21 November, 2020
+22 November, 2020
 
   - [1 Introduction](#introduction)
   - [2 Learning objectives](#learning-objectives)
@@ -89,7 +89,11 @@ vm_carbon_stock.fx(j,"urban",c_pools) = 0;
 *' @limitations Carbon stocks are assumed zero.
 ```
 
-#### Include it properly via lucode::update\_modules\_embedding()
+Hint: I saved these changes in the `urban` land module in a feature
+branch. Your code should agree with the code in `f_urban`:
+<https://github.com/flohump/magpie/tree/f_urban/modules/34_urban/dynamic>
+
+#### Update the code
 
 To include the new realization `dynamic` properly into the GAMS code we
 run a specific R command in the main folder. First navigate in your
@@ -116,9 +120,9 @@ Now you can quit the R session with `q()`.
 
 ### 4 Testing a new realization
 
-#### Set the new realization in main.gms and cfg and start a model run
+#### Start a model run
 
-For a quick test, we simply set the new realization in the file
+For a quick GAMS test, we simply set the new realization in the file
 `main.gms` in line 256 (replace `static` by `dynamic`). We can then
 check if the model compiles correctly with this command evoked from the
 command line.
@@ -127,9 +131,16 @@ command line.
 gams main.gms action=C
 ```
 
-Before we start a test run, we reduce the number of time steps to 3. For
-this, we change `$setglobal c_timesteps coup2100` in main.gms in line
-224 to `$setglobal c_timesteps quicktest`.
+If you get compilation errors, you have to resolve these first. Look
+into the `main.lst` file. It will tell you what kind of error occurred.
+
+To make our test run as fast as possible, we reduce the number of time
+steps to 3 and deactivate elastic food demand. For this, we change
+`$setglobal c_timesteps coup2100` in main.gms in line 224 to `$setglobal
+c_timesteps quicktest`, and change the value of `s15_elastic_demand`
+from 1 to 0 in line 74 in `modules/15_food/anthropometrics_jan18/input`.
+<https://github.com/flohump/magpie/blob/f_urban/main.gms#L224>
+<https://github.com/flohump/magpie/blob/f_urban/modules/15_food/anthropometrics_jan18/input.gms#L74>
 
 Now we can start a test run with this command. This can take a while
 depending on the resources of your machine.
