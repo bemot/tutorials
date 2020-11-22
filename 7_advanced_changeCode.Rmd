@@ -25,11 +25,11 @@ Duplicate the `static` folder and rename it to `dynamic`. Now we need to add and
 ##### declarations.gms
 ```{r, eval=FALSE}
 equations
- q34_urban(j)       		              urban land (mio. ha)
+ q34_urban(j)       		urban land (mio. ha)
 ;
 
 parameters
- p34_pop_growth(t,i) population growth factor between time steps (1)
+ p34_pop_growth(t_all,i) 		annual population growth rate (1)
 ;
 ```
 
@@ -37,13 +37,13 @@ parameters
 ```{r, eval=FALSE}
 q34_urban(j2)..
  vm_land(j2,"urban") =e= 
- pcm_land(j2,"urban") * sum((ct,cell(i2,j2)), p34_pop_growth(ct,i2));
+ pcm_land(j2,"urban") * (1 + sum((ct,cell(i2,j2)), p34_pop_growth(ct,i2)) * m_timestep_length);
 ```
 
 ##### preloop.gms
 ```{r, eval=FALSE}
-loop(t$(ord(t) > 1),
- p34_pop_growth(t,i) = im_pop(t,i)/im_pop(t-1,i);
+loop(t_all$(ord(t_all) > 1),
+ p34_pop_growth(t_all,i) = (im_pop(t_all,i)/im_pop(t_all-1,i) - 1) / m_yeardiff(t_all);
 );
 ```
 
@@ -93,7 +93,7 @@ For this, we change `$setglobal c_timesteps  coup2100` in main.gms in line 224 t
 https://github.com/flohump/magpie/blob/f_urban/main.gms#L224
 https://github.com/flohump/magpie/blob/f_urban/modules/15_food/anthropometrics_jan18/input.gms#L74
 
-Now we can start a test run with this command. This can take a while depending on the resources of your machine.
+Now we can start a test run with this command. This can take up to 10-15 minutes, depending on the resources of your machine.
 ```{r, eval=FALSE}
 gams main.gms
 ```
