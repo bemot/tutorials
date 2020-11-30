@@ -1,10 +1,13 @@
 ---
-title: "Changing inputs in MAgPIE model"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
-author: "Mi&#x0161;ko Stevanovi&#x0107; (stevanovic@pik-potsdam.de)"
-output:
- rmarkdown::github_document:
+title: "Changing inputs in the MAgPIE model"
 subtitle: MAgPIE model development team (magpie@pik-potsdam.de)
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: "Miodrag Stevanovic (stevanovic@pik-potsdam.de), updated by Florian Humpenöder (humpenoeder@pik-potsdam.de)"
+output:
+  rmarkdown::github_document:
+    toc: yes
+  html_notebook:
+    code_folding: none
 ---
 
 # 1 Introduction
@@ -14,18 +17,25 @@ The input data for MAgPIE is prepared by a set of pre-processing routines that t
 The input files are setup in the config file `config/default.cfg`, usually at the beginning of the settings. Currently, the input data is set as: 
 
 ```{r, eval=FALSE}
-cfg$input <- c("magpie4.1_default_apr19.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz")
 ```
 
 Once specified in the configuration as the input data, the data is automatically downloaded (if needed) when the model run is started. 
 
-The prepared input data is a compressed tar archive file "`.tgz`", which can be opened with software such as [7-Zip](https://www.7-zip.org/), or in terminal by `tar` and `untar` commands. The data archive file contains the following types of data: 
+The prepared input data are compressed tar archive files "`.tgz`", which can be opened with software such as [7-Zip](https://www.7-zip.org/), or in terminal by `tar` and `untar` commands. The data archive files contain the following types of data: 
 
-* climate depended bio-physical data from a crop model (region and cell specific, crop yields, water requirements, terrestrial carbon content...) 
-* processed data from other data sources used for particularization of MAgPIE (FAO, SSP, GTAP...)
-* processed data from other data sources used for validation of MAgPIE output
-* additional data prepared for model particularization (national policies...)
-* calibration factors 
+* Cellular input data (e.g. land area, crop yields, water requirements, carbon density)
+  + isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz
+* Regional input and validation data (e.g. food demand) 
+  + rev4.52_h12_magpie.tgz
+  + rev4.52_h12_validation.tgz
+  + calibration_H12_c200_26Feb20.tgz
+* Global and other input data (e.g. conversion factors, national policies)
+  + additional_data_rev3.86.tgz
 
 ### 1.1 Learning objectives
 
@@ -87,7 +97,7 @@ USA,affore,ndc,1,2020,2030,15
 
 After saving the file, package it with the tardir function in R environment and delete the file patch folder: 
 ```{r, eval=FALSE}
-lucode::tardir(dir="patch_inputdata/patch_ndc_usa_190909",
+gms::tardir(dir="patch_inputdata/patch_ndc_usa_190909",
                tarfile="patch_inputdata/patch_ndc_usa_190909.tgz")
 
 unlink("patch_inputdata/patch_ndc_usa_190909", recursive=TRUE)
@@ -97,28 +107,27 @@ unlink("patch_inputdata/patch_ndc_usa_190909", recursive=TRUE)
 
 Finally, the configuration file should be informed about the change in the input data and the existing patch file that replaces the existing input data. For this, edit the `config/default.cfg` file from: 
 ```{r, eval=FALSE}
-cfg$input <- c("magpie4.1_default_apr19.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz")
 ```
 to: 
 ```{r, eval=FALSE}
-cfg$input <- c("magpie4.1_default_apr19.tgz",
-               "patch_ndc_usa_190909.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz",
+         "patch_ndc_usa_190909.tgz")
 ```
 It is very important to add the patch file at the end of the listings in the `cfg$input` listings, because every next `.tgz` archive will overwrite the files previously imported by the files that are contained in it. 
 
 At the next start of the model by `Rscript`, the new patch will place the file with change inputs according to the changes in the settings. 
 
-# 3 Additional information 
 
-There are other pre-processed input data that have different regional resolution available for download from the PIK public repositories. They include special regional definitions focused on singly countries as regions: China, India, Ethiopia and USA: 
-```{text}
-"magpie4.1_ind_apr19.tgz"
-"magpie4.1_cha_apr19.tgz"
-"magpie4.1_aus13_jul19.tgz"
-```
-These prepared inputs can be used instead of the default regional definition inputs in `magpie4.1_default_apr19.tgz`
-
-# 4. Excercise: 
+# 3 Excercise: 
 
 Write your own starting script that will test the scenario with changed NDC policy for the USA described above. None of the changes should actually occur in the default.cfg, but instead the starting script should introduce them to the loaded cfg object. 
 

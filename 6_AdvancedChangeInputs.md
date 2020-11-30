@@ -1,7 +1,22 @@
-Changing inputs in MAgPIE model
+Changing inputs in the MAgPIE model
 ================
-Miško Stevanović (<stevanovic@pik-potsdam.de>)
-13 October, 2019
+Miodrag Stevanovic (<stevanovic@pik-potsdam.de>), updated by Florian
+Humpenöder (<humpenoeder@pik-potsdam.de>)
+30 November, 2020
+
+  - [1 Introduction](#introduction)
+      - [1.1 Learning objectives](#learning-objectives)
+      - [2 Demonstration of change in input data for national land-based
+        NDC
+        policies](#demonstration-of-change-in-input-data-for-national-land-based-ndc-policies)
+          - [2.1 Create folder for local input data
+            repository](#create-folder-for-local-input-data-repository)
+          - [2.2 Create a patched file policy\_definition.csv and
+            package it with
+            lucode::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-lucodetardir)
+          - [2.3 Add the .tgz packed patch file in the configuration
+            file](#add-the-.tgz-packed-patch-file-in-the-configuration-file)
+  - [3 Excercise:](#excercise)
 
 # 1 Introduction
 
@@ -17,27 +32,31 @@ usually at the beginning of the settings. Currently, the input data is
 set as:
 
 ``` r
-cfg$input <- c("magpie4.1_default_apr19.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz")
 ```
 
 Once specified in the configuration as the input data, the data is
 automatically downloaded (if needed) when the model run is started.
 
-The prepared input data is a compressed tar archive file “`.tgz`”, which
+The prepared input data are compressed tar archive files “`.tgz`”, which
 can be opened with software such as [7-Zip](https://www.7-zip.org/), or
-in terminal by `tar` and `untar` commands. The data archive file
-contains the following types of data:
+in terminal by `tar` and `untar` commands. The data archive files
+contain the following types of data:
 
-  - climate depended bio-physical data from a crop model (region and
-    cell specific, crop yields, water requirements, terrestrial carbon
-    content…)
-  - processed data from other data sources used for particularization of
-    MAgPIE (FAO, SSP, GTAP…)
-  - processed data from other data sources used for validation of MAgPIE
-    output
-  - additional data prepared for model particularization (national
-    policies…)
-  - calibration factors
+  - Cellular input data (e.g. land area, crop yields, water
+    requirements, carbon density)
+      - isimip\_rcp-IPSL\_CM5A\_LR-rcp2p6-co2\_rev48\_c200\_690d3718e151be1b450b394c1064b1c5.tgz
+  - Regional input and validation data (e.g. food demand)
+      - rev4.52\_h12\_magpie.tgz
+      - rev4.52\_h12\_validation.tgz
+      - calibration\_H12\_c200\_26Feb20.tgz
+  - Global and other input data (e.g. conversion factors, national
+    policies)
+      - additional\_data\_rev3.86.tgz
 
 ### 1.1 Learning objectives
 
@@ -48,8 +67,7 @@ objectives:
 
 1.  Create local input data repository.
 2.  Package the patch file.
-3.  Update the configuration to automatically apply designed
-changes.
+3.  Update the configuration to automatically apply designed changes.
 
 ## 2 Demonstration of change in input data for national land-based NDC policies
 
@@ -109,8 +127,7 @@ file.copy(from="./scripts/npi_ndc/policies/policy_definitions.csv",
           to="./patch_inputdata/patch_ndc_usa_190909/.")
 ```
 
-or in the command
-line:
+or in the command line:
 
 ``` cmd
 cp scripts/npi_ndc/policies/policy_definitions.csv patch_inputdata/patch_ndc_usa_190909/.
@@ -128,7 +145,7 @@ After saving the file, package it with the tardir function in R
 environment and delete the file patch folder:
 
 ``` r
-lucode::tardir(dir="patch_inputdata/patch_ndc_usa_190909",
+gms::tardir(dir="patch_inputdata/patch_ndc_usa_190909",
                tarfile="patch_inputdata/patch_ndc_usa_190909.tgz")
 
 unlink("patch_inputdata/patch_ndc_usa_190909", recursive=TRUE)
@@ -141,14 +158,22 @@ the input data and the existing patch file that replaces the existing
 input data. For this, edit the `config/default.cfg` file from:
 
 ``` r
-cfg$input <- c("magpie4.1_default_apr19.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz")
 ```
 
 to:
 
 ``` r
-cfg$input <- c("magpie4.1_default_apr19.tgz",
-               "patch_ndc_usa_190909.tgz")
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+         "rev4.52_h12_magpie.tgz",
+         "rev4.52_h12_validation.tgz",
+         "calibration_H12_c200_26Feb20.tgz",
+         "additional_data_rev3.86.tgz",
+         "patch_ndc_usa_190909.tgz")
 ```
 
 It is very important to add the patch file at the end of the listings in
@@ -159,23 +184,7 @@ in it.
 At the next start of the model by `Rscript`, the new patch will place
 the file with change inputs according to the changes in the settings.
 
-# 3 Additional information
-
-There are other pre-processed input data that have different regional
-resolution available for download from the PIK public repositories. They
-include special regional definitions focused on singly countries as
-regions: China, India, Ethiopia and USA:
-
-``` text
-"magpie4.1_ind_apr19.tgz"
-"magpie4.1_cha_apr19.tgz"
-"magpie4.1_aus13_jul19.tgz"
-```
-
-These prepared inputs can be used instead of the default regional
-definition inputs in `magpie4.1_default_apr19.tgz`
-
-# 4\. Excercise:
+# 3 Excercise:
 
 Write your own starting script that will test the scenario with changed
 NDC policy for the USA described above. None of the changes should
