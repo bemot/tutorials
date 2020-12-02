@@ -12,9 +12,12 @@ next step is to evaluate the simulation results. In case you have not
 yet conducted an own MAgPIE simulation or your simulation is still
 running, you can download model runs produced with the master branch of
 the GIT repository (<https://github.com/magpiemodel/magpie/tree/master>)
-and copy the folders containing the simulation results into the
-**output** folder of your local version of the MAgPIE model. The runs
-can be downloaded from: <http://bit.ly/MAGPIE4>.
+for the MAgPIE4 release and copy the folders containing the simulation
+results into the **output** folder of your local version of the MAgPIE
+model. The runs can be downloaded from:
+<https://zenodo.org/record/2572620#.X8Zr9RbPw2w>. They have been release
+together with the MAgPIE4 model description paper
+(<https://gmd.copernicus.org/articles/12/1299/2019/gmd-12-1299-2019-assets.html>).
 
 There are several ways to assess and evaluate MAgPIE results. This
 tutorial gives an overview on different tools and options that can be
@@ -31,7 +34,7 @@ The goal of this exercise is to use several tools for output analysis.
 After completion of this exercise, you’ll be able to:
 
 1.  Use **model-internal R-scripts** for output analysis.
-2.  Know where to find the **automated validation pdf** and how it is
+2.  Know where to find the **automated validation PDF** and how it is
     structured.
 3.  Use the evaluation tool **appResultsLocal** of the library
     **shinyresults**.
@@ -153,8 +156,8 @@ editors. Please refer to the `vignette("mif")` of the package *mip*
 The automated model validation is an important example of output
 analysis based on model-internal scripts (see section 2). If the
 validation script is executed (either by selection via cfg$output as
-explained in 2.1. or by execution via command window as explained in
-2.2.), a standard evaluation pdf is created that validates numerous
+explained in 2.1. or by execution via the command window as explained in
+2.2.), a standard evaluation PDF is created that validates numerous
 model outputs with a validation database containing historical data and
 projections for most outputs returned by the model, either visually or
 via statistical tests. A standard evaluation PDF consists of hundreds of
@@ -167,10 +170,10 @@ MAgPIE 4 framework paper (<https://doi.org/10.5281/zenodo.1485303>).
 
 ### 3.2 Coverage of model outputs
 
-The table of contents of the validation pdf gives a good overview about
-the breadth of model outputs that can be simulated with a MAgPIE
-standard simulation, even though the validation pdf only shows a subset
-of possible model
+The table of contents of the validation PDF gives a good overview over
+the model outputs that can be simulated with a MAgPIE standard
+simulation, even though the validation PDF only shows a subset of
+possible model
 outputs:
 
 <div class="figure" style="text-align: center">
@@ -193,17 +196,17 @@ files that show results of the simulation runs used for the MAgPIE4
 paper) and
 
 1.  make yourself familiar with the structure of the document and the
-    hierarchy of outputs as displayed by the table of contents as well
-    as
+    hierarchy of outputs as displayed by the table of contents and
 2.  have a look at some figures displaying model outputs of your
     interest.
 
 # 4 Interactive scenario analysis
 
-The automated model validation is a good tool for visually evaluating a
-broad range of model outputs. However, comparison between model runs,
-i.e. between different scenarios, is rather difficult and inconvenient
-if the model results are scattered across different large PDF files.
+The automated model validation PDF is a good tool for visually
+evaluating a broad range of model outputs. However, comparison between
+model runs, i.e. between different scenarios, is rather difficult and
+inconvenient with the different model results being scattered across
+different large PDF files.
 
 ### 4.1 Interactive scenario analysis with appResultsLocal
 
@@ -310,8 +313,8 @@ Selection of variables for line plots
 
 </div>
 
-Now, make yourself familiar with the features of the app. You can for
-example select a subset of regions or a subset of time steps for which
+Make yourself familiar with the features of the app\! You can, for
+example, select a subset of regions or a subset of time steps for which
 the results should be plotted. Moreover, you can free the y-axis,
 include or exclude validation data (if available) and download the plot.
 
@@ -325,10 +328,10 @@ evaluation facilitated by scripts in the model folders
 the functionality of the R package *magpie4*
 (<https://github.com/pik-piam/magpie4>). This library contains a list of
 common functions for extracting outputs from the MAgPIE model which are
-also the basis for the generation of the automated validation pdf. For a
+also the basis for the generation of the automated validation PDF. For a
 quick overview on the functions which are included in the library, you
-can scan the folder **magpie4/R**. The following figure shows a subset
-of R-files included in
+can have a look in the folder **magpie4/R**. The following figure shows
+a subset of R-files included in
 **magpie4/R**:
 
 <div class="figure" style="text-align: center">
@@ -417,10 +420,10 @@ extract the marginal values of these variables.
 1.  You have an **overview on several tools** analysing MAgPIE outputs.
 2.  You know how to start **model-internal R-scripts**.
 3.  You know how to generate and where to find the **automated
-    validation pdf** and how it is structured.
-4.  You know how to start the evaluation tool **appResultsLocal** of the
-    library **shinyresults** and how you can visualized MAgPIE results
-    with this tool.
+    validation PDF** and how it is structured.
+4.  You know how to start the evaluation tool **appResultsLocal** from
+    the library **shinyresults** and how you can visualized MAgPIE
+    results with this tool.
 5.  You know the general functionality of the **magpie4 library** and
     how to use some of the functions.
 6.  You know the general functionality of the **gdx library**.
