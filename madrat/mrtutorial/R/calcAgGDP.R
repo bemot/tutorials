@@ -14,8 +14,8 @@
 
 calcAgGDP <- function(){
 
-  gdp <- readSource("WDI", subtype="NY.GDP.MKTP.CD")
-  ag_gdp <- readSource("WDI", subtype="NV.AGR.TOTL.CD")
+  gdp <- readSource("TutorialWDI", subtype="NY.GDP.MKTP.CD")
+  ag_gdp <- readSource("TutorialWDI", subtype="NV.AGR.TOTL.CD")
 
   x <- ag_gdp/gdp
   x <- collapseNames(x)
