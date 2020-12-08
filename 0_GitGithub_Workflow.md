@@ -1,7 +1,15 @@
 Use GitHub to work with MAgPIE
 ================
 Kristine Karstens (<karstens@pik-potsdam.de>)
-11 October, 2019
+08 December, 2020
+
+  - [1 Introduction](#introduction)
+      - [Learning objectives](#learning-objectives)
+  - [2 GitHub workflow for
+    magpiemodel](#github-workflow-for-magpiemodel)
+  - [3 Zoo of branches](#zoo-of-branches)
+  - [4 Start to commit yourself](#start-to-commit-yourself)
+  - [5 References to learn more](#references-to-learn-more)
 
 # 1 Introduction
 
@@ -48,16 +56,16 @@ upstream repository (the original magpiemodel fork).
 It is basically possible to change the code just using the GitHub
 interface, but since you want to test and run your code locally you have
 to clone the repository from your fork anyway. This can be done using
-the ‘https’ or ‘ssh’ adresse of your fork together with the `git clone`
-command (cmd/bash/GUI) at your machine. We recommand to upload an
+the ‘https’ or ‘ssh’ adress of your fork together with the `git clone`
+command (cmd/bash/GUI) at your machine. We recommend to upload an
 ssh-key and use ssh to connect to GitHub.
 
 > **Exercise**: Visit your fork and clone the repository at your
 > machine.
 
 To keep your fork up-to-date with the upstream repository you can use
-the GitHub interface. Via `Compare` you are able to check, if the
-upstream is some commits ahead and if so merge this new changes into
+the GitHub interface. Via `Compare` you are able to check if the
+upstream is some commits ahead and, if so, merge this new changes into
 your fork. If you feel familiar with git, you also can do this merging
 procedure by adding both your fork and the upstream repository as so
 called ‘remotes’ to your local repository.
@@ -69,22 +77,21 @@ called ‘remotes’ to your local repository.
 
 To start new developments we create feature branches to keep the develop
 branch clean. In the following figure you can see a simple example for
-branches and their
-relationships.
+branches and their relationships.
 
 <img src="figures/git_branches.png" width="100%" style="display: block; margin: auto;" />
 
   - The master branch of the upstream repository will be created by the
     magpiemodel team after accumulation of new developments in the
     develop branch. Please do not try to create a pull request directly
-    to the master branch with you are not 100% sure, that you have a
+    to the master branch when you are not 100% sure, that you have a
     urgent hotfix.
   - The develop branch is the basis for new developments. Create a
     feature branch at your project fork to start your feature.
   - After you have finished your development by creating some commits,
     you merge your work via a pull request back to the develop branch of
     the upstream repository. You can merge your changes before into your
-    develop and start a pull request from their or your directly create
+    develop and start a pull request from there or your directly create
     it from your feature branch.
   - The work itself will be done at your local project clone and will be
     pushed into your project fork. Basic commands for the interaction
@@ -98,14 +105,14 @@ we strongly recommend to do a tutorial to get familiar with the basic
 commands in git. You can also have a look on ‘git cheat sheets’ like
 <https://about.gitlab.com/images/press/git-cheat-sheet.pdf>.
 
-Here we just want to draw your attention to: - the branching workfow, we
-are kindly ask you to use and - the various working areas of the git
+Here we just want to draw your attention to: - the branching workflow,
+we kindly ask you to use and - the various working areas of the git
 workflow.
 
 <img src="figures/git_basics.png" width="100%" style="display: block; margin: auto;" />
 
 Git wil help you not only to push changes to your remote repositories to
-version control them, you will also locally controll your development
+version control them, you will also locally control your development
 steps:
 
   - When you introduce changes at your working directory, you can mark
@@ -118,3 +125,10 @@ steps:
     see them finally at your forks GitHub-page.
 
   - Now you can do a `pull request`.
+
+# 5 References to learn more
+
+  - <https://education.github.com/git-cheat-sheet-education.pdf>
+  - <https://git-scm.com/book/en/v2>
+  - <https://guides.github.com/activities/hello-world/>
+  - <https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB->
