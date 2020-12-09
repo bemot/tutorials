@@ -1,7 +1,7 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-22 November, 2020
+09 December, 2020
 
   - [1 Introduction](#introduction)
   - [2 Learning objectives](#learning-objectives)
@@ -154,7 +154,8 @@ GAMS will create a `fulldata.gdx` file in the main folder.
 For starting a productive model run, we would have to change the config
 file `config/default.cfg` in line 489 (replace `static` by `dynamic`).
 We could now start a model run with `Rscript start.R -> 1: default -> 1:
-Direct execution`.
+Direct execution`. Or, even better write a start script without changing
+`config/default.cfg`.
 
 #### Check the results
 
