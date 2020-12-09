@@ -71,7 +71,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
 ```
 
 
-### 2.2 Create a patched file policy_definition.csv and package it with lucode::tardir()
+### 2.2 Create a patched file policy_definition.csv and package it with gms::tardir()
 
 Create a sub-directory in the `./patch_inputdata` which is going to be used for packaging of the patched files. 
 ```{r, eval=FALSE}
@@ -141,7 +141,7 @@ cfg$repositories <- append(getOption("magpie_repos"),
                            list("https://rse.pik-potsdam.de/data/magpie/public"=NULL))
 ```
 
-With this setup, the download script (`Rscript start.R -> 3 Download data`) will first look into your local repo and check if the input files (`cfg$input`) exist. If you download the input files once from `https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this saves you from downloading all input files again in case you make a change to (`cfg$input`).
+With this setup, the download script (`Rscript start.R -> 3 Download data`) will first look into your local repo and check if the input files (`cfg$input`) exist. If you download the input files once from `https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this saves you from downloading all input files again in case you make a change to `cfg$input`.
 
 # 4 Excercise: 
 

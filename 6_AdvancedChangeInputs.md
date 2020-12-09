@@ -13,7 +13,7 @@ Humpenöder (<humpenoeder@pik-potsdam.de>)
             repository](#create-folder-for-local-input-data-repository)
           - [2.2 Create a patched file policy\_definition.csv and
             package it with
-            lucode::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-lucodetardir)
+            gms::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-gmstardir)
           - [2.3 Add the .tgz packed patch file in the configuration
             file](#add-the-.tgz-packed-patch-file-in-the-configuration-file)
   - [3 Alternative way of adding a local
@@ -112,7 +112,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 ```
 
-### 2.2 Create a patched file policy\_definition.csv and package it with lucode::tardir()
+### 2.2 Create a patched file policy\_definition.csv and package it with gms::tardir()
 
 Create a sub-directory in the `./patch_inputdata` which is going to be
 used for packaging of the patched files.
@@ -212,7 +212,7 @@ data`) will first look into your local repo and check if the input files
 (`cfg$input`) exist. If you download the input files once from
 `https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this
 saves you from downloading all input files again in case you make a
-change to (`cfg$input`).
+change to `cfg$input`.
 
 # 4 Excercise:
 
