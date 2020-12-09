@@ -126,8 +126,24 @@ It is very important to add the patch file at the end of the listings in the `cf
 
 At the next start of the model by `Rscript`, the new patch will place the file with change inputs according to the changes in the settings. 
 
+# 3 Alternative way of adding a local repository
 
-# 3 Excercise: 
+As an alternative to the steps carried out in 2.1 we can add a local repository to `getOption("magpie_repos")`. 
+For this, we have to add an entry in the `.Rprofile` file. Typically `.Rprofile` is located in the users’ home directory `(~/.Rprofile)`.
+```{r, eval=FALSE}
+options(magpie_repos=list("~/input_data/"=NULL))
+```
+The local repository can be located anywhere on your filesystem. You could then add `patch_ndc_usa_190909.tgz` in this folder. 
+
+Changes in `default.cfg`.
+```{r, eval=FALSE}
+cfg$repositories <- append(getOption("magpie_repos"),
+                           list("https://rse.pik-potsdam.de/data/magpie/public"=NULL))
+```
+
+With this setup, the download script (`Rscript start.R -> 3 Download data`) will first look into your local repo and check if the input files (`cfg$input`) exist. If you download the input files once from `https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this saves you from downloading all input files again in case you make a change to (`cfg$input`).
+
+# 4 Excercise: 
 
 Write your own starting script that will test the scenario with changed NDC policy for the USA described above. None of the changes should actually occur in the default.cfg, but instead the starting script should introduce them to the loaded cfg object. 
 

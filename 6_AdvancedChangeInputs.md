@@ -2,7 +2,7 @@ Changing inputs in the MAgPIE model
 ================
 Miodrag Stevanovic (<stevanovic@pik-potsdam.de>), updated by Florian
 Humpenöder (<humpenoeder@pik-potsdam.de>)
-30 November, 2020
+09 December, 2020
 
   - [1 Introduction](#introduction)
       - [1.1 Learning objectives](#learning-objectives)
@@ -16,7 +16,9 @@ Humpenöder (<humpenoeder@pik-potsdam.de>)
             lucode::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-lucodetardir)
           - [2.3 Add the .tgz packed patch file in the configuration
             file](#add-the-.tgz-packed-patch-file-in-the-configuration-file)
-  - [3 Excercise:](#excercise)
+  - [3 Alternative way of adding a local
+    repository](#alternative-way-of-adding-a-local-repository)
+  - [4 Excercise:](#excercise)
 
 # 1 Introduction
 
@@ -184,7 +186,35 @@ in it.
 At the next start of the model by `Rscript`, the new patch will place
 the file with change inputs according to the changes in the settings.
 
-# 3 Excercise:
+# 3 Alternative way of adding a local repository
+
+As an alternative to the steps carried out in 2.1 we can add a local
+repository to `getOption("magpie_repos")`. For this, we have to add an
+entry in the `.Rprofile` file. Typically `.Rprofile` is located in the
+users’ home directory `(~/.Rprofile)`.
+
+``` r
+options(magpie_repos=list("~/input_data/"=NULL))
+```
+
+The local repository can be located anywhere on your filesystem. You
+could then add `patch_ndc_usa_190909.tgz` in this folder.
+
+Changes in `default.cfg`.
+
+``` r
+cfg$repositories <- append(getOption("magpie_repos"),
+                           list("https://rse.pik-potsdam.de/data/magpie/public"=NULL))
+```
+
+With this setup, the download script (`Rscript start.R -> 3 Download
+data`) will first look into your local repo and check if the input files
+(`cfg$input`) exist. If you download the input files once from
+`https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this
+saves you from downloading all input files again in case you make a
+change to (`cfg$input`).
+
+# 4 Excercise:
 
 Write your own starting script that will test the scenario with changed
 NDC policy for the USA described above. None of the changes should
