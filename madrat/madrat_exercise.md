@@ -11,6 +11,11 @@ and comes out of the MAgPIE model, and are standardized for consistency.
 For this exercise, we will work with the ‘mrtutorial’ package as an
 example of the mr- package structure.
 
+Please fork your own branch of mrtutorial from
+<https://github.com/pik-piam/mrtutorial>
+
+Then clone this branch locally.
+
 ## 1\. Package structure
 
 Directories in the package are automatically generated for the most
@@ -35,6 +40,9 @@ Note that if direct download not possible, data files can be manually
 created in the inputdata/sources folder. This is not the preferred
 implemntation, but in this case, a download function is not necessary.
 Naming of the source folder must however match the read functions.
+Metadata on where the data was obtained, how it was downloaded, etc.
+should ideally be documented in the download script. For an ideal case,
+please see downloadTau in the madrat package.
 
 Please open the downloadTutorialWDI R script.
 
@@ -56,7 +64,10 @@ Remember that magclass objects are an array with the the spatial
 dimension in the first dimension, the temporal dimension in the second,
 and data values in the third dimemsion(s) (3.1, 3.2…).
 
-Now let’s look at readTutorialWDI.R
+Now let’s look at readTutorialWDI.R. Note here that because of the way
+WDI downloads it’s data, the naming of the data is assumed by madrat to
+be multiple subdimensions, due to the use of the “.”. This is generally
+to be avoided, to avoid confusing names and dimensions. Let’s rena
 
 ``` r
 x <- readSource("TutorialWDI", subtype="SP.POP.TOTL", convert=FALSE)
@@ -66,7 +77,8 @@ x <- readSource("TutorialWDI", subtype="SP.POP.TOTL", convert=FALSE)
 
 The convert function will complete the magclass object: For
 country-level data, all 249 countries represented in MAGPie need to have
-a value and be in ISO3 country code.
+a value and be in ISO3 country code. toolCountryFill() in the convert
+function also removesany codes that it can not match.
 
 Note that here we have omitted a correctSource() function, it is by
 default OFF but can be implemented via convert=“onlycorrect”
@@ -82,16 +94,32 @@ x <- readSource("TutorialWDI", subtype="SP.POP.TOTL", convert=TRUE)
 
 Magclass objects are consistent in structure, making calculations easy.
 The calcOutput wrapper function calls the functions used to transform
-input data, called as calcOutput(“type”, “option1”, “option2”, …)
+input data, called as calcOutput(“type”, “option1”, “option2”, …).
+
+ag\_gdp() will calculate agricultural gdp as share of total gdp. Let’s
+open this function.
 
 ``` r
-ag_gdp <- calcOutput("AgGDP", aggregate=F)
+ag_gdp <- calcOutput("AgGDP")
 ```
 
 By default, calcOutput functions will aggregate to the regional level.
 
 After the function is written and built, try it now with the calcAgGDP
 function. What is Germany’s share of Agricultural GDP in 2010?
+(Germany’s ISO3 code is “DEU”)
+
+\#\#\#EXERCISE
+
+Let’s imagine that agricultural GDP comes from only 3 sectors:
+c(“grains”, “vegetables”, “livestock”), for which each contributes
+20%, 15%, 65% of ag. GDP respectively.
+
+Modify the calcAgGDP function so that it includes a 2nd sub-dimension in
+the 3rd dimension (dim 3.2) detailing the split into the 3 sectors,
+while keeping Ag\_GDP\_share in dimension 3.1
+
+Use new.magpie() to get started.
 
 All functions are saved in the inputdata/cache file after the first run,
 increasing efficiency. This means that for any updates to functions, the
