@@ -75,8 +75,9 @@ Hint: If you change, add or delete variables/parameters always run these command
 
 Run codeCheck to check if all module interfaces exist. 
 ```{r, eval=FALSE}
-gms::codeCheck()
+gms::codeCheck(interactive = TRUE)
 ```
+codeCheck will detect a problem with interfaces in 34_urban. Follow the instructions, which will add a `not_used.txt` file.
 
 Now you can quit the R session with `q()`.
 

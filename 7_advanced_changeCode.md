@@ -1,7 +1,7 @@
 Advanced: Change MAgPIE GAMS Code
 ================
 Florian Humpenöder (<humpenoeder@pik-potsdam.de>)
-09 December, 2020
+10 December, 2020
 
   - [1 Introduction](#introduction)
   - [2 Learning objectives](#learning-objectives)
@@ -113,8 +113,11 @@ compilation errors.
 Run codeCheck to check if all module interfaces exist.
 
 ``` r
-gms::codeCheck()
+gms::codeCheck(interactive = TRUE)
 ```
+
+codeCheck will detect a problem with interfaces in 34\_urban. Follow the
+instructions, which will add a `not_used.txt` file.
 
 Now you can quit the R session with `q()`.
 
