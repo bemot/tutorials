@@ -1,5 +1,5 @@
 ---
-title: "MADRat_Exercise"
+title: "MADRaT_Exercise"
 author: "David M Chen"
 date: "03/12/2020"
 output: rmarkdown::github_document
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Learning Objectives
 
-In this exercise, we will look into the MADRat structure for libraries; These libraries do the bulk of the processing of the data that goes in and comes out of the MAgPIE model, and are standardized for consistency. For this exercise, we will work with the 'mrtutorial' package as an example of the mr- package structure. 
+In this exercise, we will look into the MADRaT framework; Libraries organized throught this framework do the bulk of the processing of the data that goes in and comes out of the MAgPIE model, and are standardized for consistency. For this exercise, we will work with the 'mrtutorial' package as an example of the mr- package structure. 
 
 Please fork your own branch of mrtutorial from https://github.com/pik-piam/mrtutorial
 
