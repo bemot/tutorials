@@ -2,7 +2,7 @@ Changing inputs in the MAgPIE model
 ================
 Miodrag Stevanovic (<stevanovic@pik-potsdam.de>), updated by Florian
 Humpenöder (<humpenoeder@pik-potsdam.de>)
-09 December, 2020
+10 December, 2020
 
   - [1 Introduction](#introduction)
       - [1.1 Learning objectives](#learning-objectives)
@@ -220,3 +220,62 @@ Write your own starting script that will test the scenario with changed
 NDC policy for the USA described above. None of the changes should
 actually occur in the default.cfg, but instead the starting script
 should introduce them to the loaded cfg object.
+
+Add a MAgPIE start script here:
+`scripts/start/projects/name_of_your_script.R`
+
+With this content:
+
+``` r
+# |  (C) 2008-2020 Potsdam Institute for Climate Impact Research (PIK)
+# |  authors, and contributors see CITATION.cff file. This file is part
+# |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+# |  AGPL-3.0, you are granted additional permissions described in the
+# |  MAgPIE License Exception, version 1.0 (see LICENSE file).
+# |  Contact: magpie@pik-potsdam.de
+
+# ----------------------------------------------------------
+# description: Test USA NDC
+# ----------------------------------------------------------
+
+
+######################################
+#### Script to start a MAgPIE run ####
+######################################
+
+library(lucode2)
+library(magclass)
+library(gms)
+
+# Load start_run(cfg) function which is needed to start MAgPIE runs
+source("scripts/start_functions.R")
+
+#start MAgPIE runs
+source("config/default.cfg")
+
+#cfg$force_download <- FALSE
+
+cfg$results_folder <- "output/:title:"
+
+cfg$output <- c("rds_report")
+
+
+cfg$title <- "SSP2_NDC_default"
+cfg <- gms::setScenario(cfg,c("SSP2","NDC"))
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+               "rev4.52_h12_magpie.tgz",
+               "rev4.52_h12_validation.tgz",
+               "calibration_H12_c200_26Feb20.tgz",
+               "additional_data_rev3.86.tgz")
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- "SSP2_NDC_USA"
+cfg <- gms::setScenario(cfg,c("SSP2","NDC"))
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+               "rev4.52_h12_magpie.tgz",
+               "rev4.52_h12_validation.tgz",
+               "calibration_H12_c200_26Feb20.tgz",
+               "additional_data_rev3.86.tgz",
+               "patch_ndc_usa_190909.tgz")
+start_run(cfg,codeCheck=FALSE)
+```
