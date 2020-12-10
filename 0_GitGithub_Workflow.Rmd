@@ -79,3 +79,11 @@ Git wil help you not only to push changes to your remote repositories to version
 - When you `git push` your changes to your remote repository, you will see them finally at your forks GitHub-page. 
 
 - Now you can do a `pull request`.
+
+# 5 References to learn more
+
+- https://education.github.com/git-cheat-sheet-education.pdf
+- https://git-scm.com/book/en/v2
+- https://guides.github.com/activities/hello-world/
+- https://www.youtube.com/playlist?list=PLg7s6cbtAD15G8lNyoaYDuKZSKyJrgwB-
+

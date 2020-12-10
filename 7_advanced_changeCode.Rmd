@@ -75,8 +75,9 @@ Hint: If you change, add or delete variables/parameters always run these command
 
 Run codeCheck to check if all module interfaces exist. 
 ```{r, eval=FALSE}
-gms::codeCheck()
+gms::codeCheck(interactive = TRUE)
 ```
+codeCheck will detect a problem with interfaces in 34_urban. Follow the instructions, which will add a `not_used.txt` file.
 
 Now you can quit the R session with `q()`.
 
@@ -99,7 +100,7 @@ gams main.gms
 ```
 GAMS will create a `fulldata.gdx` file in the main folder.
 
-For starting a productive model run, we would have to change the config file `config/default.cfg` in line 489 (replace `static` by `dynamic`). We could now start a model run with `Rscript start.R -> 1: default -> 1: Direct execution`.
+For starting a productive model run, we would have to change the config file `config/default.cfg` in line 489 (replace `static` by `dynamic`). We could now start a model run with `Rscript start.R -> 1: default -> 1: Direct execution`. Or, even better write a start script without changing `config/default.cfg`.
 
 #### Check the results
 Start a new R session in the MAgPIE main folder, and execute these commands.

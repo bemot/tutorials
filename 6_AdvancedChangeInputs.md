@@ -2,7 +2,7 @@ Changing inputs in the MAgPIE model
 ================
 Miodrag Stevanovic (<stevanovic@pik-potsdam.de>), updated by Florian
 Humpenöder (<humpenoeder@pik-potsdam.de>)
-30 November, 2020
+10 December, 2020
 
   - [1 Introduction](#introduction)
       - [1.1 Learning objectives](#learning-objectives)
@@ -13,10 +13,12 @@ Humpenöder (<humpenoeder@pik-potsdam.de>)
             repository](#create-folder-for-local-input-data-repository)
           - [2.2 Create a patched file policy\_definition.csv and
             package it with
-            lucode::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-lucodetardir)
+            gms::tardir()](#create-a-patched-file-policy_definition.csv-and-package-it-with-gmstardir)
           - [2.3 Add the .tgz packed patch file in the configuration
             file](#add-the-.tgz-packed-patch-file-in-the-configuration-file)
-  - [3 Excercise:](#excercise)
+  - [3 Alternative way of adding a local
+    repository](#alternative-way-of-adding-a-local-repository)
+  - [4 Excercise:](#excercise)
 
 # 1 Introduction
 
@@ -110,7 +112,7 @@ cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=
                            getOption("magpie_repos"))
 ```
 
-### 2.2 Create a patched file policy\_definition.csv and package it with lucode::tardir()
+### 2.2 Create a patched file policy\_definition.csv and package it with gms::tardir()
 
 Create a sub-directory in the `./patch_inputdata` which is going to be
 used for packaging of the patched files.
@@ -184,9 +186,96 @@ in it.
 At the next start of the model by `Rscript`, the new patch will place
 the file with change inputs according to the changes in the settings.
 
-# 3 Excercise:
+# 3 Alternative way of adding a local repository
+
+As an alternative to the steps carried out in 2.1 we can add a local
+repository to `getOption("magpie_repos")`. For this, we have to add an
+entry in the `.Rprofile` file. Typically `.Rprofile` is located in the
+users’ home directory `(~/.Rprofile)`.
+
+``` r
+options(magpie_repos=list("~/input_data/"=NULL))
+```
+
+The local repository can be located anywhere on your filesystem. You
+could then add `patch_ndc_usa_190909.tgz` in this folder.
+
+Changes in `default.cfg`.
+
+``` r
+cfg$repositories <- append(getOption("magpie_repos"),
+                           list("https://rse.pik-potsdam.de/data/magpie/public"=NULL))
+```
+
+With this setup, the download script (`Rscript start.R -> 3 Download
+data`) will first look into your local repo and check if the input files
+(`cfg$input`) exist. If you download the input files once from
+`https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this
+saves you from downloading all input files again in case you make a
+change to `cfg$input`.
+
+# 4 Excercise:
 
 Write your own starting script that will test the scenario with changed
 NDC policy for the USA described above. None of the changes should
 actually occur in the default.cfg, but instead the starting script
 should introduce them to the loaded cfg object.
+
+Add a MAgPIE start script here:
+`scripts/start/projects/name_of_your_script.R`
+
+With this content:
+
+``` r
+# |  (C) 2008-2020 Potsdam Institute for Climate Impact Research (PIK)
+# |  authors, and contributors see CITATION.cff file. This file is part
+# |  of MAgPIE and licensed under AGPL-3.0-or-later. Under Section 7 of
+# |  AGPL-3.0, you are granted additional permissions described in the
+# |  MAgPIE License Exception, version 1.0 (see LICENSE file).
+# |  Contact: magpie@pik-potsdam.de
+
+# ----------------------------------------------------------
+# description: Test USA NDC
+# ----------------------------------------------------------
+
+
+######################################
+#### Script to start a MAgPIE run ####
+######################################
+
+library(lucode2)
+library(magclass)
+library(gms)
+
+# Load start_run(cfg) function which is needed to start MAgPIE runs
+source("scripts/start_functions.R")
+
+#start MAgPIE runs
+source("config/default.cfg")
+
+#cfg$force_download <- FALSE
+
+cfg$results_folder <- "output/:title:"
+
+cfg$output <- c("rds_report")
+
+
+cfg$title <- "SSP2_NDC_default"
+cfg <- gms::setScenario(cfg,c("SSP2","NDC"))
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+               "rev4.52_h12_magpie.tgz",
+               "rev4.52_h12_validation.tgz",
+               "calibration_H12_c200_26Feb20.tgz",
+               "additional_data_rev3.86.tgz")
+start_run(cfg,codeCheck=FALSE)
+
+cfg$title <- "SSP2_NDC_USA"
+cfg <- gms::setScenario(cfg,c("SSP2","NDC"))
+cfg$input <- c("isimip_rcp-IPSL_CM5A_LR-rcp2p6-co2_rev48_c200_690d3718e151be1b450b394c1064b1c5.tgz",
+               "rev4.52_h12_magpie.tgz",
+               "rev4.52_h12_validation.tgz",
+               "calibration_H12_c200_26Feb20.tgz",
+               "additional_data_rev3.86.tgz",
+               "patch_ndc_usa_190909.tgz")
+start_run(cfg,codeCheck=FALSE)
+```

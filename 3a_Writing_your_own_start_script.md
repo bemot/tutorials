@@ -332,7 +332,7 @@ the loop which we deleted earlier):
 # Starting trade loop
 for(trade_setting  in c("selfsuff_reduced","free_apr16")){
   # Starting forestry loop
-  for(forestry_setting  in c("affore_vegc_dec16","static_sep16")){
+  for(forestry_setting  in c("dynamic_may20","static_sep16")){
     
     # Set trade realization
     cfg$gms$trade <- trade_setting 
@@ -343,7 +343,7 @@ for(trade_setting  in c("selfsuff_reduced","free_apr16")){
     # Changing title flags
     if(trade_setting  == "selfsuff_reduced") trade_flag="resTrade"
     if(trade_setting  == "free_apr16") trade_flag="freeTrade"
-    if(forestry_setting  == "affore_vegc_dec16") forestry_flag = "affFor"
+    if(forestry_setting  == "dynamic_may20") forestry_flag = "dynFor"
     if(forestry_setting  == "static_sep16") forestry_flag = "statFor"
     
     # Updating default tile
@@ -380,7 +380,7 @@ cfg$output <- c("rds_report","interpolation")
 # Starting trade loop
 for(trade_setting  in c("selfsuff_reduced","free_apr16")){
   # Starting forestry loop
-  for(forestry_setting  in c("affore_vegc_dec16","static_sep16")){
+  for(forestry_setting  in c("dynamic_may20","static_sep16")){
     
     # Set trade realization
     cfg$gms$trade <- trade_setting 
@@ -391,7 +391,7 @@ for(trade_setting  in c("selfsuff_reduced","free_apr16")){
     # Changing title flags
     if(trade_setting  == "selfsuff_reduced") trade_flag="resTrade"
     if(trade_setting  == "free_apr16") trade_flag="freeTrade"
-    if(forestry_setting  == "affore_vegc_dec16") forestry_flag = "affFor"
+    if(forestry_setting  == "dynamic_may20") forestry_flag = "dynFor"
     if(forestry_setting  == "static_sep16") forestry_flag = "statFor"
     
     # Updating default tile
