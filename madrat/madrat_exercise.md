@@ -1,15 +1,15 @@
-MADRat\_Exercise
+MADRaT\_Exercise
 ================
 David M Chen
 03/12/2020
 
 # Learning Objectives
 
-In this exercise, we will look into the MADRat structure for libraries;
-These libraries do the bulk of the processing of the data that goes in
-and comes out of the MAgPIE model, and are standardized for consistency.
-For this exercise, we will work with the ‘mrtutorial’ package as an
-example of the mr- package structure.
+In this exercise, we will look into the MADRaT framework; Libraries
+organized throught this framework do the bulk of the processing of the
+data that goes in and comes out of the MAgPIE model, and are
+standardized for consistency. For this exercise, we will work with the
+‘mrtutorial’ package as an example of the mr- package structure.
 
 Please fork your own branch of mrtutorial from
 <https://github.com/pik-piam/mrtutorial>
@@ -104,24 +104,41 @@ ag_gdp <- calcOutput("AgGDP")
 ```
 
 By default, calcOutput functions will aggregate to the regional level.
+We can also turn the cache on via:
 
-After the function is written and built, try it now with the calcAgGDP
-function. What is Germany’s share of Agricultural GDP in 2010?
-(Germany’s ISO3 code is “DEU”)
+``` r
+setConfig(forcecache=T)
+```
 
-\#\#\#EXERCISE
+Now try running the same function again. We can also go see where cache
+files are stored. All functions are cached as .Rda in
+/inputdata/cache/cache\_folder after the first run, meaning
+time-consuming functions do not need to be re-run. This means however
+that for any updates to functions, the older cached function needs to be
+deleted. Cache is toggled with setConfig(forcecache=TRUE).
+
+### EXERCISE
+
+Using our new ag\_gdp magpie object, answer the following questions in
+break out rooms:
+
+1.  What is Germany’s share of Agricultural GDP in 2010? (Germany’s ISO3
+    code is “DEU”)
 
 Let’s imagine that agricultural GDP comes from only 3 sectors:
 c(“grains”, “vegetables”, “livestock”), for which each contributes
 20%, 15%, 65% of ag. GDP respectively.
 
-Modify the calcAgGDP function so that it includes a 2nd sub-dimension in
-the 3rd dimension (dim 3.2) detailing the split into the 3 sectors,
-while keeping Ag\_GDP\_share in dimension 3.1
+2.  Modify the calcAgGDP function so that it includes a 2nd
+    sub-dimension in the 3rd dimension (dim 3.2) detailing the split
+    into the 3 sectors, while keeping Ag\_GDP\_share in dimension 3.1
 
 Use new.magpie() to get started.
 
-All functions are saved in the inputdata/cache file after the first run,
-increasing efficiency. This means that for any updates to functions, the
-older cached function needs to be deleted. Cache is toggled with
-setConfig(forcecache=TRUE)
+3.  Once the function is modified, you will have to rebuild the
+    mrtutorial library in order for these changes to take place. This
+    can be done with the Rstudio “Install and Restart” during the
+    testing phase, but when ready for commit, lucode2::buildLibrary()
+    needs to be run. This requires installing the lucode2 package. Only
+    when all Errors, Warnings, and Notes are taken care of can the
+    package be correctly committed.
