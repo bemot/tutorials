@@ -2,7 +2,7 @@ Changing inputs in the MAgPIE model
 ================
 Miodrag Stevanovic (<stevanovic@pik-potsdam.de>), updated by Florian
 Humpenöder (<humpenoeder@pik-potsdam.de>)
-10 December, 2020
+12 December, 2020
 
   - [1 Introduction](#introduction)
       - [1.1 Learning objectives](#learning-objectives)
@@ -197,22 +197,23 @@ users’ home directory `(~/.Rprofile)`.
 options(magpie_repos=list("~/input_data/"=NULL))
 ```
 
-The local repository can be located anywhere on your filesystem. You
-could then add `patch_ndc_usa_190909.tgz` in this folder.
+The local repository `input_data` can be located anywhere on your
+filesystem. You could then add `patch_ndc_usa_190909.tgz` in this
+folder.
 
-Changes in `default.cfg`.
+Hint: If you can’t locate your `.Rprofile`, you can use
+`usethis::edit_r_profile()`.
+
+`cfg$repositories` in `default.cfg` can be reverted back.
 
 ``` r
-cfg$repositories <- append(getOption("magpie_repos"),
-                           list("https://rse.pik-potsdam.de/data/magpie/public"=NULL))
+cfg$repositories <- append(list("https://rse.pik-potsdam.de/data/magpie/public"=NULL),
+                           getOption("magpie_repos"))
 ```
 
 With this setup, the download script (`Rscript start.R -> 3 Download
-data`) will first look into your local repo and check if the input files
-(`cfg$input`) exist. If you download the input files once from
-`https://rse.pik-potsdam.de/data/magpie/public` to your local repo, this
-saves you from downloading all input files again in case you make a
-change to `cfg$input`.
+data`) will first look into the public repo and secondly into your local
+repo for downloading the files specified in `cfg$input`.
 
 # 4 Excercise:
 
