@@ -1,6 +1,6 @@
 Install the MAgPIE model and all software/data required
 ================
-Anastasis Giannousakis (<giannou@pik-potsdam.de>)
+Anastasis Giannousakis (<giannou@pik-potsdam.de>), Abhijeet Mishra (<mishra@pik-potsdam.de>)
 07 September, 2019
 
 HOW TO INSTALL
@@ -25,6 +25,13 @@ For R, some packages are required to run MAgPIE. All are either distributed via 
 options(repos = c(CRAN = "@CRAN@", pik = "https://rse.pik-potsdam.de/r/packages"))
 ```
 
+Confirm that the PIK R package repository is correctly recognized by your R environment using
+
+```{r, eval=FALSE}
+options("repos")
+```
+This should return a `CRAN` repository ("https://cran.rstudio.com/") and a `PIK` repository ("https://rse.pik-potsdam.de/r/packages")
+
 After that all remaining packages can be installed via `install.packages`
 
 ``` r
@@ -35,7 +42,9 @@ pkgs <- c("gdxrrw",
           "magclass",
           "madrat",
           "mip",
-          "lucode",
+          "lucode2",
+          "gms",
+          "ncdf4",
           "magpie4",
           "magpiesets",
           "lusweave",
