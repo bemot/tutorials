@@ -2,7 +2,7 @@
 title: "Install the MAgPIE model and all software/data required"
 subtitle: MAgPIE model development team (magpie@pik-potsdam.de)
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-author: Anastasis Giannousakis (giannou@pik-potsdam.de)
+author: Anastasis Giannousakis (giannou@pik-potsdam.de), Abhijeet Mishra (mishra@pik-potsdam.de)
 output: rmarkdown::github_document
   
 ---
