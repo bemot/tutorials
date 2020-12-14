@@ -1,6 +1,6 @@
 Install the MAgPIE model and all software/data required
 ================
-Anastasis Giannousakis (<giannou@pik-potsdam.de>)
+Anastasis Giannousakis (<giannou@pik-potsdam.de>), Abhijeet Mishra (<mishra@pik-potsdam.de>)
 07 September, 2019
 
 HOW TO INSTALL
